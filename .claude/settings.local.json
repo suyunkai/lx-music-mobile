@@ -3,7 +3,12 @@
     "allow": [
       "Bash(git config:*)",
       "Bash(./gradlew assembleDebug -PreactNativeArchitectures=arm64-v8a --no-daemon)",
-      "Bash(node patches/apply-patches.js)"
+      "Bash(node patches/apply-patches.js)",
+      "Bash(adb -s 7a371795 logcat -d)",
+      "Bash(MSYS_NO_PATHCONV=1 adb -s 7a371795 logcat -d)",
+      "Bash(MSYS_NO_PATHCONV=1 adb -s 7a371795 logcat -d -t 500)",
+      "Read(//tmp/**)",
+      "Bash(MSYS_NO_PATHCONV=1 adb -s 7a371795 shell \"logcat -d | grep -E 'WanosAudioProcessor|channelMask|mWanosUpmix' | tail -20\")"
     ]
   }
 }

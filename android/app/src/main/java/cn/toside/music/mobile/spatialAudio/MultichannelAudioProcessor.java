@@ -57,7 +57,10 @@ public class MultichannelAudioProcessor implements AudioProcessor {
     // 输出暂存（处理后等待 getOutput 读取）
     private ByteBuffer pendingOutput = EMPTY_BUFFER;
 
-    private enum ProcessMode { PASSTHROUGH, UPMIX }
+    // 是否启用多声道直通保护（防止 ExoPlayer 降混多声道为立体声）
+    private boolean multichannelPassthroughEnabled = true;
+
+    private enum ProcessMode { PASSTHROUGH, UPMIX, MULTICHANNEL_PASSTHROUGH }
     private ProcessMode processMode = ProcessMode.PASSTHROUGH;
 
     public MultichannelAudioProcessor() {
@@ -167,7 +170,6 @@ public class MultichannelAudioProcessor implements AudioProcessor {
 
         if (inputChannels == 2 && upmixEnabled && targetLayout.getChannelCount() > 2) {
             processMode = ProcessMode.UPMIX;
-            // 输出保持与输入相同的编码格式（FLOAT 或 16BIT）
             pendingOutputFormat = new AudioFormat(
                     inputAudioFormat.sampleRate,
                     targetLayout.getChannelCount(),
@@ -179,7 +181,15 @@ public class MultichannelAudioProcessor implements AudioProcessor {
             return pendingOutputFormat;
         }
 
-        // 多声道直通 或 不满足上混条件
+        // 多声道输入（≥3ch）：直通保护，防止 ExoPlayer 降混
+        if (inputChannels > 2 && multichannelPassthroughEnabled) {
+            processMode = ProcessMode.MULTICHANNEL_PASSTHROUGH;
+            pendingOutputFormat = inputAudioFormat;
+            Log.d(TAG, "configure: " + inputChannels + "ch " +
+                    inputAudioFormat.sampleRate + "Hz -> multichannel passthrough");
+            return pendingOutputFormat;
+        }
+
         processMode = ProcessMode.PASSTHROUGH;
         pendingOutputFormat = inputAudioFormat;
         return inputAudioFormat;
@@ -187,12 +197,27 @@ public class MultichannelAudioProcessor implements AudioProcessor {
 
     @Override
     public boolean isActive() {
-        return enabled && libraryAvailable && processMode == ProcessMode.UPMIX;
+        // UPMIX: 上混处理需要激活
+        // MULTICHANNEL_PASSTHROUGH: 必须激活，否则 ExoPlayer 会降混多声道为立体声
+        return (enabled && libraryAvailable && processMode == ProcessMode.UPMIX)
+                || (multichannelPassthroughEnabled && processMode == ProcessMode.MULTICHANNEL_PASSTHROUGH);
     }
 
     @Override
     public void queueInput(@NonNull ByteBuffer input) {
-        if (!input.hasRemaining() || processMode != ProcessMode.UPMIX) return;
+        if (!input.hasRemaining()) return;
+
+        // 多声道直通：原样传递数据，不做任何处理
+        if (processMode == ProcessMode.MULTICHANNEL_PASSTHROUGH) {
+            int size = input.remaining();
+            ByteBuffer out = ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder());
+            out.put(input);
+            out.flip();
+            pendingOutput = out;
+            return;
+        }
+
+        if (processMode != ProcessMode.UPMIX) return;
 
         int inputBytes = input.remaining();
         int bytesPerSample = inputIsFloat ? 4 : 2;

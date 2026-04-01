@@ -112,6 +112,27 @@ public class MultichannelAudioProcessor implements AudioProcessor {
 
     public String getRemapMode() { return remapMode; }
 
+    /** 获取当前输入声道数（音源声道） */
+    public int getCurrentInputChannelCount() {
+        return inputAudioFormat != AudioFormat.NOT_SET ? inputAudioFormat.channelCount : 0;
+    }
+
+    /** 获取当前输出声道数（实际播放声道） */
+    public int getCurrentOutputChannelCount() {
+        return pendingOutputFormat != AudioFormat.NOT_SET ? pendingOutputFormat.channelCount : 0;
+    }
+
+    /** 获取当前处理模式描述（含声道信息） */
+    public String getProcessModeDetail() {
+        int inCh = getCurrentInputChannelCount();
+        int outCh = getCurrentOutputChannelCount();
+        String mode = processMode.name();
+        if (inCh > 0) {
+            return mode + " (" + inCh + "ch → " + outCh + "ch)";
+        }
+        return mode;
+    }
+
     public String getProcessModeDescription() {
         if (!enabled) return "passthrough";
         return processMode == ProcessMode.UPMIX

@@ -29,7 +29,6 @@ export default memo(() => {
         check={isEnabled}
         onChange={handleToggle}
         label={t('multichannel_enable')}
-        need
       />
       <Text style={[styles.desc, { color: theme['c-font-label'] }]} size={12}>
         {t('multichannel_enable_desc')}

@@ -223,6 +223,9 @@ public class SpatialAudioModule extends ReactContextBaseJavaModule {
             map.putBoolean("systemWanosAvailable", systemWanosAvailable);
             map.putBoolean("systemWanosEnabled", systemWanosEnabled);
             map.putInt("systemOutputChannels", getSystemOutputChannels());
+            map.putInt("inputChannelCount", proc.getCurrentInputChannelCount());
+            map.putInt("outputChannelCount", proc.getCurrentOutputChannelCount());
+            map.putString("processModeDetail", proc.getProcessModeDetail());
             promise.resolve(map);
         } catch (Exception e) {
             promise.reject("SPATIAL_AUDIO_ERROR", e.getMessage(), e);
@@ -324,22 +327,18 @@ public class SpatialAudioModule extends ReactContextBaseJavaModule {
     }
 
     /**
-     * 播放声道测试音
-     * @param channelName 声道名称（如 "FL", "FR", "FC", "LFE" 等）
-     * @param frequency   频率 Hz（100~2000）
-     * @param volume      音量（0.0~1.0）
+     * 播放声道测试音（单次，约1.5秒）
      */
     @ReactMethod
     public void playTestTone(String channelName, double frequency, double volume, Promise promise) {
         try {
-            MultichannelAudioProcessor proc = getAudioProcessor();
-            ChannelLayout layout = proc.getTargetLayout();
-            int channelIndex = layout.getChannelIndex(channelName);
-            if (channelIndex < 0) {
+            ChannelLayout layout = resolveTestLayout(channelName);
+            if (layout == null) {
                 promise.reject("INVALID_CHANNEL",
-                        "Channel '" + channelName + "' not found in layout " + layout.getDisplayName());
+                        "Channel '" + channelName + "' not found");
                 return;
             }
+            int channelIndex = layout.getChannelIndex(channelName);
             getTestToneGenerator().play(
                     getReactApplicationContext(), layout,
                     channelIndex, (float) frequency, (float) volume);
@@ -347,6 +346,41 @@ public class SpatialAudioModule extends ReactContextBaseJavaModule {
         } catch (Exception e) {
             promise.reject("SPATIAL_AUDIO_ERROR", e.getMessage(), e);
         }
+    }
+
+    /**
+     * 持续播放声道测试音（循环，直到调用 stopTestTone）
+     */
+    @ReactMethod
+    public void playTestToneLoop(String channelName, double frequency, double volume, Promise promise) {
+        try {
+            ChannelLayout layout = resolveTestLayout(channelName);
+            if (layout == null) {
+                promise.reject("INVALID_CHANNEL",
+                        "Channel '" + channelName + "' not found");
+                return;
+            }
+            int channelIndex = layout.getChannelIndex(channelName);
+            getTestToneGenerator().playLoop(
+                    getReactApplicationContext(), layout,
+                    channelIndex, (float) frequency, (float) volume);
+            promise.resolve(null);
+        } catch (Exception e) {
+            promise.reject("SPATIAL_AUDIO_ERROR", e.getMessage(), e);
+        }
+    }
+
+    /** 根据声道名找到包含该声道的最大布局 */
+    private ChannelLayout resolveTestLayout(String channelName) {
+        // 优先用 targetLayout
+        ChannelLayout layout = getAudioProcessor().getTargetLayout();
+        if (layout.getChannelIndex(channelName) >= 0) return layout;
+        // 回退：从所有布局中找包含该声道的最大的
+        ChannelLayout[] all = ChannelLayout.values();
+        for (int i = all.length - 1; i >= 0; i--) {
+            if (all[i].getChannelIndex(channelName) >= 0) return all[i];
+        }
+        return null;
     }
 
     /**

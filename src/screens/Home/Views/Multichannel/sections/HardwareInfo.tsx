@@ -35,8 +35,8 @@ export default memo(({ hwInfo }: Props) => {
             <Text style={[styles.label, { color: theme['c-font-label'] }]} size={13}>
               {t('multichannel_hardware_max_ch')}
             </Text>
-            <Text style={[styles.value, { color: theme['c-font'] }]} size={13}>
-              {hwInfo.maxChannelCount}
+            <Text style={[styles.value, { color: theme['c-primary'] }]} size={14}>
+              {hwInfo.maxChannelCount} ch
             </Text>
           </View>
           <View style={styles.layoutBadges}>

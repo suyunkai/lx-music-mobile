@@ -37,6 +37,7 @@ const defaultSetting: LX.AppSetting = {
   'player.multichannelLayout': 'auto',
   'player.isEnableUpmix': true,
   'player.multichannelRemapMode': 'auto',
+  'player.isShowChannelInfo': false,
 
   // 'playDetail.isZoomActiveLrc': false,
   // 'playDetail.isShowLyricProgressSetting': false,

@@ -8,6 +8,7 @@ import ChannelLayoutSelector from './sections/ChannelLayoutSelector'
 import StereoUpmix from './sections/StereoUpmix'
 import RemappingConfig from './sections/RemappingConfig'
 import ChannelTest from './sections/ChannelTest'
+import ShowChannelInfo from './sections/ShowChannelInfo'
 import { useSettingValue } from '@/store/setting/hook'
 import { detectHardware, type HardwareInfo as HWInfo } from '@/plugins/player/spatialAudio'
 
@@ -41,6 +42,7 @@ export default memo(() => {
           <ChannelLayoutSelector hwInfo={hwInfo} />
           <StereoUpmix />
           <RemappingConfig />
+          <ShowChannelInfo />
           <ChannelTest hwInfo={hwInfo} />
         </>
       ) : null}

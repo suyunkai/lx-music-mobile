@@ -11,78 +11,82 @@ import android.util.Log;
 
 /**
  * 声道测试音生成器
- * 在指定声道上播放正弦波测试音，用于验证各喇叭位置
+ * 支持单次播放和持续循环播放，在指定声道上播放正弦波测试音
  */
 public class TestToneGenerator {
 
     private static final String TAG = "TestToneGenerator";
     private static final int SAMPLE_RATE = 48000;
-    private static final int DEFAULT_DURATION_MS = 1500;
-    private static final int FADE_MS = 50; // 淡入淡出时间
+    private static final int FADE_MS = 30;
 
     private AudioTrack audioTrack;
     private Thread playThread;
     private volatile boolean isPlaying = false;
+    private volatile boolean shouldLoop = false;
 
     /**
-     * 播放测试音
-     * @param layout   目标声道布局
-     * @param channelIndex 声道索引（在布局内的位置）
-     * @param frequency 频率 (Hz)，范围 100~2000
-     * @param volume    音量 0.0~1.0
+     * 播放测试音（单次，1.5秒）
      */
     public synchronized void play(Context context, ChannelLayout layout,
                                   int channelIndex, float frequency, float volume) {
-        stop(); // 停止之前的播放
+        playInternal(context, layout, channelIndex, frequency, volume, false);
+    }
+
+    /**
+     * 持续播放测试音（循环，直到调用 stop）
+     */
+    public synchronized void playLoop(Context context, ChannelLayout layout,
+                                      int channelIndex, float frequency, float volume) {
+        playInternal(context, layout, channelIndex, frequency, volume, true);
+    }
+
+    private void playInternal(Context context, ChannelLayout layout,
+                              int channelIndex, float frequency, float volume, boolean loop) {
+        stop();
 
         int channelCount = layout.getChannelCount();
         if (channelIndex < 0 || channelIndex >= channelCount) {
-            Log.e(TAG, "Invalid channel index " + channelIndex + " for layout " + layout.getDisplayName());
+            Log.e(TAG, "Invalid channel index " + channelIndex + " for " + layout.getDisplayName());
             return;
         }
 
-        frequency = Math.max(100f, Math.min(2000f, frequency));
+        frequency = Math.max(20f, Math.min(4000f, frequency));
         volume = Math.max(0f, Math.min(1f, volume));
+        shouldLoop = loop;
 
         final float freq = frequency;
         final float vol = volume;
+        final Context ctx = context;
 
         playThread = new Thread(() -> {
             try {
-                playToneInternal(context, layout, channelIndex, freq, vol);
+                streamTone(ctx, layout, channelIndex, freq, vol);
             } catch (Exception e) {
-                Log.e(TAG, "Test tone playback failed: " + e.getMessage());
+                Log.e(TAG, "Test tone failed: " + e.getMessage());
             } finally {
                 isPlaying = false;
+                shouldLoop = false;
             }
         }, "TestToneThread");
         isPlaying = true;
         playThread.start();
     }
 
-    private void playToneInternal(Context context, ChannelLayout layout,
-                                  int channelIndex, float frequency, float volume) {
+    private void streamTone(Context context, ChannelLayout layout,
+                            int channelIndex, float frequency, float volume) {
         int channelCount = layout.getChannelCount();
         int channelMask = layout.getChannelMask();
-        int totalSamples = (SAMPLE_RATE * DEFAULT_DURATION_MS) / 1000;
+
+        // 每次写入 0.1 秒的数据块
+        int chunkSamples = SAMPLE_RATE / 10;
         int fadeSamples = (SAMPLE_RATE * FADE_MS) / 1000;
+        // 单次模式播放 1.5 秒
+        int totalSamplesOnce = (int) (SAMPLE_RATE * 1.5);
 
-        // 生成交错浮点 PCM：仅目标声道有声，其余静音
-        float[] buffer = new float[totalSamples * channelCount];
-        for (int i = 0; i < totalSamples; i++) {
-            float sample = (float) (Math.sin(2.0 * Math.PI * frequency * i / SAMPLE_RATE) * volume);
-
-            // 淡入淡出包络，避免爆音
-            if (i < fadeSamples) {
-                sample *= (float) i / fadeSamples;
-            } else if (i > totalSamples - fadeSamples) {
-                sample *= (float) (totalSamples - i) / fadeSamples;
-            }
-
-            buffer[i * channelCount + channelIndex] = sample;
-        }
-
-        int bufferBytes = buffer.length * 4; // float = 4 bytes
+        int bufferSize = chunkSamples * channelCount * 4; // float = 4 bytes
+        int minBuf = AudioTrack.getMinBufferSize(SAMPLE_RATE,
+                channelMask, AudioFormat.ENCODING_PCM_FLOAT);
+        if (bufferSize < minBuf) bufferSize = minBuf;
 
         audioTrack = new AudioTrack.Builder()
                 .setAudioAttributes(new AudioAttributes.Builder()
@@ -94,59 +98,77 @@ public class TestToneGenerator {
                         .setEncoding(AudioFormat.ENCODING_PCM_FLOAT)
                         .setChannelMask(channelMask)
                         .build())
-                .setBufferSizeInBytes(bufferBytes)
-                .setTransferMode(AudioTrack.MODE_STATIC)
+                .setBufferSizeInBytes(bufferSize * 2)
+                .setTransferMode(AudioTrack.MODE_STREAM)
                 .build();
 
-        // 路由到多声道总线
         routeToMultichannelBus(context, audioTrack);
-
-        audioTrack.write(buffer, 0, buffer.length, AudioTrack.WRITE_BLOCKING);
         audioTrack.play();
 
-        // 等待播放完成
-        try {
-            Thread.sleep(DEFAULT_DURATION_MS + 100);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+        float[] chunk = new float[chunkSamples * channelCount];
+        int samplePos = 0;
+
+        while (isPlaying && (shouldLoop || samplePos < totalSamplesOnce)) {
+            int samplesToWrite = Math.min(chunkSamples,
+                    shouldLoop ? chunkSamples : totalSamplesOnce - samplePos);
+
+            java.util.Arrays.fill(chunk, 0f);
+
+            for (int i = 0; i < samplesToWrite; i++) {
+                int globalPos = samplePos + i;
+                float sample = (float) (Math.sin(2.0 * Math.PI * frequency * globalPos / SAMPLE_RATE) * volume);
+
+                // 淡入（起始时）
+                if (!shouldLoop && globalPos < fadeSamples) {
+                    sample *= (float) globalPos / fadeSamples;
+                }
+                // 淡出（单次模式结束时）
+                if (!shouldLoop && globalPos > totalSamplesOnce - fadeSamples) {
+                    sample *= (float) (totalSamplesOnce - globalPos) / fadeSamples;
+                }
+
+                chunk[i * channelCount + channelIndex] = sample;
+            }
+
+            int written = audioTrack.write(chunk, 0, samplesToWrite * channelCount,
+                    AudioTrack.WRITE_BLOCKING);
+            if (written < 0) break;
+
+            samplePos += samplesToWrite;
+
+            // 循环模式下持续重置位置（避免 float 精度问题）
+            if (shouldLoop && samplePos > SAMPLE_RATE * 60) {
+                samplePos = 0;
+            }
         }
 
         releaseTrack();
     }
 
-    /**
-     * 将 AudioTrack 路由到多声道总线设备
-     */
     private void routeToMultichannelBus(Context context, AudioTrack track) {
         if (Build.VERSION.SDK_INT < 23) return;
 
         HardwareDetector.Result hw = HardwareDetector.getCachedResult();
-        if (hw == null) {
-            hw = HardwareDetector.detect(context);
-        }
+        if (hw == null) hw = HardwareDetector.detect(context);
         if (!hw.available || hw.deviceId < 0) return;
 
         AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         if (am == null) return;
 
-        AudioDeviceInfo[] devices = am.getDevices(AudioManager.GET_DEVICES_OUTPUTS);
-        for (AudioDeviceInfo device : devices) {
+        for (AudioDeviceInfo device : am.getDevices(AudioManager.GET_DEVICES_OUTPUTS)) {
             if (device.getId() == hw.deviceId) {
                 track.setPreferredDevice(device);
-                Log.d(TAG, "Test tone routed to device id=" + hw.deviceId +
-                        " (" + hw.busAddress + ")");
                 return;
             }
         }
     }
 
-    /**
-     * 停止当前测试音
-     */
     public synchronized void stop() {
         isPlaying = false;
+        shouldLoop = false;
         if (playThread != null) {
             playThread.interrupt();
+            try { playThread.join(200); } catch (InterruptedException ignored) {}
             playThread = null;
         }
         releaseTrack();
@@ -166,7 +188,5 @@ public class TestToneGenerator {
         }
     }
 
-    public boolean isPlaying() {
-        return isPlaying;
-    }
+    public boolean isPlaying() { return isPlaying; }
 }

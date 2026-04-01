@@ -41,6 +41,9 @@ export interface SpatialAudioStatus {
   systemWanosAvailable: boolean
   systemWanosEnabled: boolean
   systemOutputChannels: number
+  inputChannelCount: number
+  outputChannelCount: number
+  processModeDetail: string
 }
 
 // ==================== 基础控制 ====================
@@ -79,13 +82,22 @@ export const detectHardware = async(): Promise<HardwareInfo> => {
 
 // ==================== 声道测试 ====================
 
-/** 播放声道测试音 */
+/** 播放声道测试音（单次，约1.5秒） */
 export const playTestTone = async(
   channelName: string,
   frequency: number,
   volume: number,
 ): Promise<void> => {
   return SpatialAudioModule.playTestTone(channelName, frequency, volume)
+}
+
+/** 持续播放声道测试音（循环，直到调用 stopTestTone） */
+export const playTestToneLoop = async(
+  channelName: string,
+  frequency: number,
+  volume: number,
+): Promise<void> => {
+  return SpatialAudioModule.playTestToneLoop(channelName, frequency, volume)
 }
 
 /** 停止声道测试音 */

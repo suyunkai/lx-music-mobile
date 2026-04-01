@@ -6,31 +6,29 @@ import { updateSetting } from '@/core/common'
 import { useI18n } from '@/lang'
 import { useTheme } from '@/store/theme/hook'
 import Text from '@/components/common/Text'
-import { setUpmixEnabled } from '@/plugins/player/spatialAudio'
 
 export default memo(() => {
   const t = useI18n()
   const theme = useTheme()
-  const isEnabled = useSettingValue('player.isEnableUpmix')
+  const isShow = useSettingValue('player.isShowChannelInfo')
 
   const handleToggle = useCallback((val: boolean) => {
-    updateSetting({ 'player.isEnableUpmix': val })
-    void setUpmixEnabled(val)
+    updateSetting({ 'player.isShowChannelInfo': val })
   }, [])
 
   return (
     <View style={[styles.container, { borderColor: theme['c-border'] }]}>
       <Text style={[styles.sectionTitle, { color: theme['c-font'] }]}>
-        {t('multichannel_upmix')}
+        {t('multichannel_channel_info')}
       </Text>
       <View style={styles.content}>
         <CheckBox
-          check={isEnabled}
+          check={isShow}
           onChange={handleToggle}
-          label={t('multichannel_upmix_enable')}
+          label={t('multichannel_channel_info_enable')}
         />
         <Text style={[styles.desc, { color: theme['c-font-label'] }]} size={12}>
-          {t('multichannel_upmix_desc')}
+          {t('multichannel_channel_info_desc')}
         </Text>
       </View>
     </View>

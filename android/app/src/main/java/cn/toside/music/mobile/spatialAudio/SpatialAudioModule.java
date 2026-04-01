@@ -12,6 +12,7 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.guichaguri.trackplayer.service.MusicManager;
 
@@ -262,6 +263,115 @@ public class SpatialAudioModule extends ReactContextBaseJavaModule {
             }
             // 设置多声道输出路由：将音频路由到支持多声道的总线
             MusicManager.setMultichannelOutput(getReactApplicationContext(), true);
+            promise.resolve(null);
+        } catch (Exception e) {
+            promise.reject("SPATIAL_AUDIO_ERROR", e.getMessage(), e);
+        }
+    }
+
+    // ==================== 硬件检测 ====================
+
+    /**
+     * 检测多声道硬件能力
+     * 返回：{ available, busAddress, supportedLayouts, maxChannelCount }
+     */
+    @ReactMethod
+    public void detectHardware(Promise promise) {
+        try {
+            HardwareDetector.Result result = HardwareDetector.detect(getReactApplicationContext());
+            WritableMap map = Arguments.createMap();
+            map.putBoolean("available", result.available);
+            map.putString("busAddress", result.busAddress);
+            map.putInt("maxChannelCount", result.maxChannelCount);
+            map.putInt("deviceId", result.deviceId);
+
+            WritableArray layouts = Arguments.createArray();
+            for (ChannelLayout layout : result.supportedLayouts) {
+                WritableMap layoutMap = Arguments.createMap();
+                layoutMap.putString("name", layout.getDisplayName());
+                layoutMap.putString("wanosName", layout.getWanosName());
+                layoutMap.putInt("channelCount", layout.getChannelCount());
+                WritableArray names = Arguments.createArray();
+                for (String ch : layout.getChannelNames()) {
+                    names.pushString(ch);
+                }
+                layoutMap.putArray("channelNames", names);
+                layouts.pushMap(layoutMap);
+            }
+            map.putArray("supportedLayouts", layouts);
+
+            WritableArray masks = Arguments.createArray();
+            for (int mask : result.supportedChannelMasks) {
+                masks.pushInt(mask);
+            }
+            map.putArray("supportedChannelMasks", masks);
+
+            promise.resolve(map);
+        } catch (Exception e) {
+            promise.reject("SPATIAL_AUDIO_ERROR", e.getMessage(), e);
+        }
+    }
+
+    // ==================== 声道测试 ====================
+
+    private TestToneGenerator testToneGenerator;
+
+    private TestToneGenerator getTestToneGenerator() {
+        if (testToneGenerator == null) {
+            testToneGenerator = new TestToneGenerator();
+        }
+        return testToneGenerator;
+    }
+
+    /**
+     * 播放声道测试音
+     * @param channelName 声道名称（如 "FL", "FR", "FC", "LFE" 等）
+     * @param frequency   频率 Hz（100~2000）
+     * @param volume      音量（0.0~1.0）
+     */
+    @ReactMethod
+    public void playTestTone(String channelName, double frequency, double volume, Promise promise) {
+        try {
+            MultichannelAudioProcessor proc = getAudioProcessor();
+            ChannelLayout layout = proc.getTargetLayout();
+            int channelIndex = layout.getChannelIndex(channelName);
+            if (channelIndex < 0) {
+                promise.reject("INVALID_CHANNEL",
+                        "Channel '" + channelName + "' not found in layout " + layout.getDisplayName());
+                return;
+            }
+            getTestToneGenerator().play(
+                    getReactApplicationContext(), layout,
+                    channelIndex, (float) frequency, (float) volume);
+            promise.resolve(null);
+        } catch (Exception e) {
+            promise.reject("SPATIAL_AUDIO_ERROR", e.getMessage(), e);
+        }
+    }
+
+    /**
+     * 停止声道测试音
+     */
+    @ReactMethod
+    public void stopTestTone(Promise promise) {
+        try {
+            getTestToneGenerator().stop();
+            promise.resolve(null);
+        } catch (Exception e) {
+            promise.reject("SPATIAL_AUDIO_ERROR", e.getMessage(), e);
+        }
+    }
+
+    // ==================== 重映射模式 ====================
+
+    /**
+     * 设置重映射模式
+     * @param mode "auto" | "passthrough" | "remap" | "fill"
+     */
+    @ReactMethod
+    public void setRemapMode(String mode, Promise promise) {
+        try {
+            getAudioProcessor().setRemapMode(mode);
             promise.resolve(null);
         } catch (Exception e) {
             promise.reject("SPATIAL_AUDIO_ERROR", e.getMessage(), e);

@@ -5,6 +5,7 @@ import SongList from '../Views/SongList'
 import Mylist from '../Views/Mylist'
 import Leaderboard from '../Views/Leaderboard'
 import Setting from '../Views/Setting'
+import Multichannel from '../Views/Multichannel'
 import commonState, { type InitState as CommonState } from '@/store/common/state'
 import { createStyle } from '@/utils/tools'
 import PagerView, { type PageScrollStateChangedNativeEvent, type PagerViewOnPageSelectedEvent } from 'react-native-pager-view'
@@ -177,6 +178,25 @@ const SettingPage = () => {
   }, [])
   return visible ? component : null
 }
+const MultichannelPage = () => {
+  const [visible, setVisible] = useState(commonState.navActiveId == 'nav_multichannel')
+  const component = useMemo(() => <Multichannel />, [])
+  useEffect(() => {
+    const handleNavIdUpdate = (id: CommonState['navActiveId']) => {
+      if (id == 'nav_multichannel') {
+        requestAnimationFrame(() => {
+          setVisible(true)
+        })
+      }
+    }
+    global.state_event.on('navActiveIdUpdated', handleNavIdUpdate)
+
+    return () => {
+      global.state_event.off('navActiveIdUpdated', handleNavIdUpdate)
+    }
+  }, [])
+  return visible ? component : null
+}
 
 const viewMap = {
   nav_search: 0,
@@ -184,6 +204,7 @@ const viewMap = {
   nav_top: 2,
   nav_love: 3,
   nav_setting: 4,
+  nav_multichannel: 5,
 }
 const indexMap = [
   'nav_search',
@@ -191,6 +212,7 @@ const indexMap = [
   'nav_top',
   'nav_love',
   'nav_setting',
+  'nav_multichannel',
 ] as const
 
 const Main = () => {
@@ -288,6 +310,9 @@ const Main = () => {
       </View>
       <View collapsable={false} key="nav_setting" style={styles.pageStyle}>
         <SettingPage />
+      </View>
+      <View collapsable={false} key="nav_multichannel" style={styles.pageStyle}>
+        <MultichannelPage />
       </View>
       {/* <View collapsable={false} key="nav_search" style={styles.pageStyle}>
         <Search />

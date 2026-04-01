@@ -34,8 +34,9 @@ const defaultSetting: LX.AppSetting = {
   'player.isS2t': false,
   'player.isShowBluetoothLyric': false,
   'player.isEnableMultichannel': false,
-  'player.multichannelLayout': '5.1',
+  'player.multichannelLayout': 'auto',
   'player.isEnableUpmix': true,
+  'player.multichannelRemapMode': 'auto',
 
   // 'playDetail.isZoomActiveLrc': false,
   // 'playDetail.isShowLyricProgressSetting': false,

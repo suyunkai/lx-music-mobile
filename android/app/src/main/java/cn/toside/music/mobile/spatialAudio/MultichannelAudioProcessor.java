@@ -60,7 +60,15 @@ public class MultichannelAudioProcessor implements AudioProcessor {
     // 是否启用多声道直通保护（防止 ExoPlayer 降混多声道为立体声）
     private boolean multichannelPassthroughEnabled = true;
 
-    private enum ProcessMode { PASSTHROUGH, UPMIX, MULTICHANNEL_PASSTHROUGH }
+    // 重映射模式："auto" 自动选择, "passthrough" 强制直通, "remap" 强制降混, "fill" 强制补足
+    private String remapMode = "auto";
+
+    // 混音矩阵（REMAP/FILL 模式使用）
+    private float[][] mixMatrix = null;
+    private int mixSourceCh = 0;
+    private int mixTargetCh = 0;
+
+    private enum ProcessMode { PASSTHROUGH, UPMIX, MULTICHANNEL_PASSTHROUGH, MULTICHANNEL_REMAP, MULTICHANNEL_FILL }
     private ProcessMode processMode = ProcessMode.PASSTHROUGH;
 
     public MultichannelAudioProcessor() {
@@ -96,6 +104,13 @@ public class MultichannelAudioProcessor implements AudioProcessor {
     }
 
     public ChannelLayout getTargetLayout() { return targetLayout; }
+
+    public void setRemapMode(String mode) {
+        this.remapMode = mode != null ? mode : "auto";
+        Log.d(TAG, "Remap mode: " + this.remapMode);
+    }
+
+    public String getRemapMode() { return remapMode; }
 
     public String getProcessModeDescription() {
         if (!enabled) return "passthrough";
@@ -157,9 +172,55 @@ public class MultichannelAudioProcessor implements AudioProcessor {
         // 只支持 PCM_16BIT 和 PCM_FLOAT
         boolean supportedEncoding = (encoding == C.ENCODING_PCM_16BIT || encoding == C.ENCODING_PCM_FLOAT);
 
-        // 多声道直通保护 —— 优先检查，即使 enabled=false（系统 Wanos 模式）也要保护多声道输入
-        // 防止多声道 PCM 被 ExoPlayer 内部降混为立体声
+        // 多声道输入处理（≥3ch）
         if (supportedEncoding && inputChannels > 2 && multichannelPassthroughEnabled) {
+            int targetCh = targetLayout.getChannelCount();
+            ChannelLayout sourceLayout = ChannelLayout.fromInputChannels(inputChannels);
+
+            // 根据 remapMode 和声道数关系决定处理模式
+            boolean needRemap = false;
+            boolean needFill = false;
+
+            if ("passthrough".equals(remapMode)) {
+                // 强制直通
+            } else if ("remap".equals(remapMode) && inputChannels > targetCh) {
+                needRemap = true;
+            } else if ("fill".equals(remapMode) && inputChannels < targetCh) {
+                needFill = true;
+            } else if ("auto".equals(remapMode)) {
+                if (inputChannels > targetCh) needRemap = true;
+                else if (inputChannels < targetCh) needFill = true;
+            }
+
+            if (needRemap) {
+                // 源声道 > 目标声道：降混重映射
+                processMode = ProcessMode.MULTICHANNEL_REMAP;
+                mixMatrix = ChannelRemapper.buildMixMatrix(sourceLayout, targetLayout);
+                mixSourceCh = inputChannels;
+                mixTargetCh = targetCh;
+                inputIsFloat = (encoding == C.ENCODING_PCM_FLOAT);
+                pendingOutputFormat = new AudioFormat(
+                        inputAudioFormat.sampleRate, targetCh, encoding);
+                Log.d(TAG, "configure: " + inputChannels + "ch -> REMAP to " +
+                        targetLayout.getDisplayName() + " (" + targetCh + "ch)");
+                return pendingOutputFormat;
+            }
+
+            if (needFill) {
+                // 源声道 < 目标声道：补足
+                processMode = ProcessMode.MULTICHANNEL_FILL;
+                mixMatrix = ChannelRemapper.buildMixMatrix(sourceLayout, targetLayout);
+                mixSourceCh = inputChannels;
+                mixTargetCh = targetCh;
+                inputIsFloat = (encoding == C.ENCODING_PCM_FLOAT);
+                pendingOutputFormat = new AudioFormat(
+                        inputAudioFormat.sampleRate, targetCh, encoding);
+                Log.d(TAG, "configure: " + inputChannels + "ch -> FILL to " +
+                        targetLayout.getDisplayName() + " (" + targetCh + "ch)");
+                return pendingOutputFormat;
+            }
+
+            // 声道匹配或强制直通：原样传递
             processMode = ProcessMode.MULTICHANNEL_PASSTHROUGH;
             pendingOutputFormat = inputAudioFormat;
             Log.d(TAG, "configure: " + inputChannels + "ch " +
@@ -200,9 +261,12 @@ public class MultichannelAudioProcessor implements AudioProcessor {
     @Override
     public boolean isActive() {
         // UPMIX: 上混处理需要激活
-        // MULTICHANNEL_PASSTHROUGH: 必须激活，否则 ExoPlayer 会降混多声道为立体声
+        // MULTICHANNEL_PASSTHROUGH/REMAP/FILL: 必须激活，否则 ExoPlayer 会降混多声道为立体声
         return (enabled && libraryAvailable && processMode == ProcessMode.UPMIX)
-                || (multichannelPassthroughEnabled && processMode == ProcessMode.MULTICHANNEL_PASSTHROUGH);
+                || (multichannelPassthroughEnabled && (
+                    processMode == ProcessMode.MULTICHANNEL_PASSTHROUGH
+                    || processMode == ProcessMode.MULTICHANNEL_REMAP
+                    || processMode == ProcessMode.MULTICHANNEL_FILL));
     }
 
     @Override
@@ -216,6 +280,13 @@ public class MultichannelAudioProcessor implements AudioProcessor {
             out.put(input);
             out.flip();
             pendingOutput = out;
+            return;
+        }
+
+        // 多声道重映射/补足：应用混音矩阵
+        if ((processMode == ProcessMode.MULTICHANNEL_REMAP || processMode == ProcessMode.MULTICHANNEL_FILL)
+                && mixMatrix != null) {
+            applyMixMatrix(input);
             return;
         }
 
@@ -341,6 +412,72 @@ public class MultichannelAudioProcessor implements AudioProcessor {
             }
             outBuf.position(outBuf.position() + BUFFER_SIZE * outCh * 2);
         }
+    }
+
+    /**
+     * 应用混音矩阵进行声道重映射或补足
+     * output[t] = sum(matrix[t][s] * input[s]) 对每个 sample
+     */
+    private void applyMixMatrix(@NonNull ByteBuffer input) {
+        int inputBytes = input.remaining();
+        int bytesPerSample = inputIsFloat ? 4 : 2;
+        int bytesPerFrame = mixSourceCh * bytesPerSample;
+        int totalFrames = inputBytes / bytesPerFrame;
+        if (totalFrames == 0) return;
+
+        int outBytesPerFrame = mixTargetCh * bytesPerSample;
+        int outBytes = totalFrames * outBytesPerFrame;
+
+        ByteBuffer outBuf = ByteBuffer.allocateDirect(outBytes).order(ByteOrder.nativeOrder());
+        ByteBuffer inputOrdered = input.order(ByteOrder.nativeOrder());
+
+        if (inputIsFloat) {
+            FloatBuffer floatIn = inputOrdered.asFloatBuffer();
+            FloatBuffer floatOut = outBuf.asFloatBuffer();
+            float[] srcFrame = new float[mixSourceCh];
+
+            for (int f = 0; f < totalFrames; f++) {
+                // 读取一帧源数据
+                for (int s = 0; s < mixSourceCh; s++) {
+                    srcFrame[s] = floatIn.get();
+                }
+                // 应用矩阵生成目标帧
+                for (int t = 0; t < mixTargetCh; t++) {
+                    float sample = 0f;
+                    for (int s = 0; s < mixSourceCh; s++) {
+                        if (mixMatrix[t][s] != 0f) {
+                            sample += mixMatrix[t][s] * srcFrame[s];
+                        }
+                    }
+                    floatOut.put(Math.max(-1.0f, Math.min(1.0f, sample)));
+                }
+            }
+        } else {
+            ShortBuffer shortIn = inputOrdered.asShortBuffer();
+            ShortBuffer shortOut = outBuf.asShortBuffer();
+            float[] srcFrame = new float[mixSourceCh];
+
+            for (int f = 0; f < totalFrames; f++) {
+                for (int s = 0; s < mixSourceCh; s++) {
+                    srcFrame[s] = shortIn.get() / 32768f;
+                }
+                for (int t = 0; t < mixTargetCh; t++) {
+                    float sample = 0f;
+                    for (int s = 0; s < mixSourceCh; s++) {
+                        if (mixMatrix[t][s] != 0f) {
+                            sample += mixMatrix[t][s] * srcFrame[s];
+                        }
+                    }
+                    sample = Math.max(-1.0f, Math.min(1.0f, sample));
+                    shortOut.put((short) (sample * 32767f));
+                }
+            }
+        }
+
+        input.position(input.limit()); // 消费所有输入
+        outBuf.position(0);
+        outBuf.limit(outBytes);
+        pendingOutput = outBuf;
     }
 
     @NonNull

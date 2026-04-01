@@ -1,0 +1,37 @@
+--- android/src/main/java/com/guichaguri/trackplayer/service/MusicManager.java.orig	2026-04-01 13:29:43.482460800 +0800
++++ android/src/main/java/com/guichaguri/trackplayer/service/MusicManager.java	2026-04-01 13:30:03.893844700 +0800
+@@ -35,6 +35,11 @@
+ import com.guichaguri.trackplayer.service.player.ExoPlayback;
+ import com.guichaguri.trackplayer.service.player.LocalPlayback;
+ 
++import androidx.media3.common.audio.AudioProcessor;
++import androidx.media3.exoplayer.audio.AudioSink;
++import androidx.media3.exoplayer.audio.DefaultAudioSink;
++import cn.toside.music.mobile.spatialAudio.SpatialAudioModule;
++
+ /**
+  * @author Guichaguri
+  */
+@@ -136,7 +141,21 @@
+                 .setBackBuffer(backBuffer, false)
+                 .build();
+ 
+-        DefaultRenderersFactory renderersFactory = new DefaultRenderersFactory(service);
++        // Inject MultichannelAudioProcessor into DefaultAudioSink
++        AudioProcessor multichannelProcessor = SpatialAudioModule.getAudioProcessor();
++        DefaultAudioSink audioSink = new DefaultAudioSink.Builder(service)
++                .setAudioProcessors(new AudioProcessor[]{multichannelProcessor})
++                .build();
++
++        DefaultRenderersFactory renderersFactory = new DefaultRenderersFactory(service) {
++            @Override
++            protected AudioSink buildAudioSink(
++                    Context context,
++                    boolean enableFloatOutput,
++                    boolean enableAudioTrackPlaybackParams) {
++                return audioSink;
++            }
++        };
+ 
+         ExoPlayer player = new ExoPlayer.Builder(service, renderersFactory)
+                 .setLoadControl(control)

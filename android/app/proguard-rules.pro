@@ -18,6 +18,10 @@
 
 -keep public class com.dylanvann.fastimage.* {*;}
 -keep public class com.dylanvann.fastimage.** {*;}
+# 多声道空间音频模块 - 通过反射调用，不能被混淆
+-keep class cn.toside.music.mobile.spatialAudio.** { *; }
+-keep class com.wanos.util.NativeMethod { *; }
+
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public class * extends com.bumptech.glide.module.AppGlideModule
 -keep public enum com.bumptech.glide.load.ImageHeaderParser$** {

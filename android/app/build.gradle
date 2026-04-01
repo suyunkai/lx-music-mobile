@@ -194,6 +194,9 @@ dependencies {
     // implementation "androidx.javascriptengine:javascriptengine:1.0.0-alpha07"
     // implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation 'wang.harlon.quickjs:wrapper-android:2.4.0'
+    // media3 用于多声道 AudioProcessor（compileOnly 避免 minSdk 冲突，运行时由 track-player 提供）
+    compileOnly 'androidx.media3:media3-common:1.8.0'
+    compileOnly 'androidx.media3:media3-exoplayer:1.8.0'
 
   if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")

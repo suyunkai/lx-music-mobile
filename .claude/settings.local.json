@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git config:*)",
+      "Bash(./gradlew assembleDebug -PreactNativeArchitectures=arm64-v8a --no-daemon)",
+      "Bash(node patches/apply-patches.js)"
+    ]
+  }
+}

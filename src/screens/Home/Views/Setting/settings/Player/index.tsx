@@ -12,6 +12,7 @@ import IsShowLyricTranslation from './IsShowLyricTranslation'
 import IsShowLyricRoma from './IsShowLyricRoma'
 import IsS2T from './IsS2T'
 import MaxCache from './MaxCache'
+import MultichannelAudio from './MultichannelAudio'
 import { useI18n } from '@/lang'
 
 
@@ -30,6 +31,7 @@ export default memo(() => {
       <IsShowLyricRoma />
       <IsS2T />
       <MaxCache />
+      <MultichannelAudio />
       <PlayHighQuality />
     </Section>
   )

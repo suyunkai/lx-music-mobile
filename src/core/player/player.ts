@@ -1,4 +1,5 @@
 import { isInitialized, initial as playerInitial, isEmpty, setPause, setPlay, setResource, setStop, initTrackInfo } from '@/plugins/player'
+import { initFromSettings as initSpatialAudio } from '@/plugins/player/spatialAudio'
 import {
   setStatusText,
 } from '@/core/player/playStatus'
@@ -235,8 +236,17 @@ const handlePlay = async() => {
       playRate: settingState.setting['player.playbackRate'],
       cacheSize: settingState.setting['player.cacheSize'] ? parseInt(settingState.setting['player.cacheSize']) : 0,
       isHandleAudioFocus: settingState.setting['player.isHandleAudioFocus'],
-      isEnableAudioOffload: settingState.setting['player.isEnableAudioOffload'],
+      // 多声道开启时必须关闭 offload，否则 AudioProcessor 会被绕过
+      isEnableAudioOffload: settingState.setting['player.isEnableMultichannel']
+        ? false
+        : settingState.setting['player.isEnableAudioOffload'],
     })
+    // 初始化多声道空间音频
+    await initSpatialAudio({
+      isEnableMultichannel: settingState.setting['player.isEnableMultichannel'],
+      multichannelLayout: settingState.setting['player.multichannelLayout'],
+      isEnableUpmix: settingState.setting['player.isEnableUpmix'],
+    }).catch((err: Error) => console.log('Spatial audio init failed:', err.message))
   }
 
   global.lx.isPlayedStop &&= false

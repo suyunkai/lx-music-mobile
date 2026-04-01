@@ -197,6 +197,21 @@ declare global {
       'player.isShowBluetoothLyric': boolean
 
       /**
+       * 是否启用多声道输出
+       */
+      'player.isEnableMultichannel': boolean
+
+      /**
+       * 多声道输出布局 "2.0" | "4.0" | "5.1" | "7.1"
+       */
+      'player.multichannelLayout': string
+
+      /**
+       * 是否启用立体声上混（将2声道上混为多声道）
+       */
+      'player.isEnableUpmix': boolean
+
+      /**
        * 播放详情页-是否缩放当前播放的歌词行
        */
       // 'playDetail.isZoomActiveLrc': boolean

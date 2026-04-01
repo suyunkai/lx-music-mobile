@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="300dp">
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:id="@+id/view_add"
+        android:background="@drawable/edit_bg_add"
+        android:layout_width="@dimen/track_width"
+        android:layout_height="@dimen/track_add_height"
+        android:layout_marginTop="5dp">
+        <TextView
+            android:textSize="@dimen/edit_track_add_font"
+            android:textColor="@color/edit_color_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+ 添加轨道"
+            android:textFontWeight="500"/>
+    </LinearLayout>
+</FrameLayout>

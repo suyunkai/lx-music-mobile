@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/relax_collection_cover_image_width"
+    android:layout_height="@dimen/relax_collection_cover_image_height"
+    app:cardCornerRadius="@dimen/relax_radius"
+    app:cardElevation="@dimen/zero_zero">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_cove"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+    <View
+        android:id="@+id/v_state"
+        android:background="@color/zero_setting_mask_color"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_gravity="center"
+        android:id="@+id/iv_state"
+        android:layout_width="@dimen/relax_collection_check_box_size"
+        android:layout_height="@dimen/relax_collection_check_box_size"
+        android:src="@drawable/ctrl_checkbox_big_select"/>
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.media3.ui.PlayerView
+        android:id="@+id/wanos_video"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_gif"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/wanos_page2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <com.wanos.media.widget.video.WanosIndicatorView
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/wanos_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/zero_indicator_height"/>
+</merge>

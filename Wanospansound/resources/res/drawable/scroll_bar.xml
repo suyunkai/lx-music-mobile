@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="@android:color/transparent"/>
+        </shape>
+    </item>
+    <item
+        android:top="20dp"
+        android:bottom="20dp"
+        android:end="16dp">
+        <shape>
+            <padding
+                android:top="20dp"
+                android:right="16dp"
+                android:bottom="20dp"/>
+            <solid android:color="@color/scroll_bar_color"/>
+            <corners android:radius="8dp"/>
+            <size android:width="17dp"/>
+        </shape>
+    </item>
+</layer-list>

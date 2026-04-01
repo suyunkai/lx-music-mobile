@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.wanos.MaterialRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/refresh_layout"
+    android:paddingLeft="104dp"
+    android:paddingRight="56dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:overlay="false"
+    app:wave_color="#00000000"
+    app:wave_show="true">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_project_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <include
+        android:id="@+id/empty_view"
+        android:visibility="gone"
+        layout="@layout/empty_view"/>
+</com.wanos.MaterialRefreshLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <com.wanos.media.widget.WanosTextView
+        android:textSize="@dimen/relax_clock_text_size"
+        android:textColor="#ccffffff"
+        android:id="@+id/tv_hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        app:wanos_weight="700"/>
+    <com.wanos.media.widget.WanosTextView
+        android:textSize="@dimen/relax_clock_text_size"
+        android:textColor="#ccffffff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" : "
+        android:includeFontPadding="false"
+        app:wanos_weight="700"/>
+    <com.wanos.media.widget.WanosTextView
+        android:textSize="@dimen/relax_clock_text_size"
+        android:textColor="#ccffffff"
+        android:id="@+id/tv_minute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        app:wanos_weight="700"/>
+</merge>

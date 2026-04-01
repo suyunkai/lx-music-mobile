@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt"
+    android:height="240dp"
+    android:width="240dp"
+    android:viewportWidth="240"
+    android:viewportHeight="240">
+    <path
+        android:fillColor="#5246dd"
+        android:pathData="M167,52.5H73V100.5H167V52.5ZM95,66.5H111V82.5H95V66.5ZM129,66.5H145V82.5H129V66.5Z"
+        android:fillType="evenOdd"/>
+    <path
+        android:fillColor="@drawable/_ic_usb_empty__0_res_0x7f080072"
+        android:pathData="M62,103.5H178V155.5C178,173.17 163.67,187.5 146,187.5H94C76.33,187.5 62,173.17 62,155.5V103.5Z"/>
+</vector>

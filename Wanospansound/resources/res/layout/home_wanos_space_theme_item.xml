@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.wanos.media.widget.SquareCardView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/im_space_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+    <net.center.blurview.ShapeBlurView
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:blur_mode="rectangle"
+        app:blur_overlay_color="#33000000"
+        app:blur_radius="60dp"/>
+    <com.wanos.media.widget.WanosTextView
+        android:textSize="34sp"
+        android:textColor="@color/white"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:layout_gravity="bottom"
+        android:id="@+id/tv_space_name"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:maxLines="1"
+        android:paddingHorizontal="18dp"
+        app:wanos_weight="400"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_gravity="top|right"
+        android:id="@+id/btn_space_op_more"
+        android:layout_width="@dimen/zero_me_more_w"
+        android:layout_height="@dimen/zero_me_more_h"
+        android:src="@drawable/space_btn_op_more"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_vip"
+        android:layout_width="72dp"
+        android:layout_height="40dp"
+        android:src="@drawable/icon_zero_vip"/>
+</com.wanos.media.widget.SquareCardView>

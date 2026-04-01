@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_width="@dimen/relax_widget_edit_action_w"
+    android:layout_height="wrap_content">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_action_icon"
+        android:layout_width="@dimen/relax_widget_edit_action_icon_size"
+        android:layout_height="@dimen/relax_widget_edit_action_icon_size"/>
+    <com.wanos.media.widget.WanosTextView
+        android:textSize="@dimen/relax_widget_edit_action_text_size"
+        android:textColor="@color/white"
+        android:ellipsize="end"
+        android:id="@+id/iv_action_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/relax_widget_edit_action_text_merge_top"
+        android:maxLines="1"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

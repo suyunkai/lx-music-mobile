@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.wanos.MaterialAutoRefreshLayout
+        android:id="@+id/order_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingEnd="@dimen/order_list_padding_r">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/order_list_cy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.wanos.MaterialAutoRefreshLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

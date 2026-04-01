@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:layout_width="@dimen/relax_volume_width"
+    android:layout_height="match_parent">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:orientation="vertical"
+        android:background="@drawable/item_volume_dialog"
+        android:layout_width="@dimen/relax_volume_seekbar_width"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <com.wanos.media.widget.WanosVolumeView
+            android:id="@+id/volume"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero_zero"
+            android:layout_marginTop="@dimen/relax_volume_seekbar_padding_h"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/relax_volume_seekbar_padding_h"
+            app:wanos_volume_default_color="#4dffffff"
+            app:wanos_volume_radius="@dimen/relax_radius"
+            app:wanos_volume_select_color="@color/relax_main_color"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/iv_audio_icon"
+            android:layout_width="@dimen/relax_volume_icon_size"
+            android:layout_height="@dimen/relax_volume_icon_size"
+            android:layout_marginVertical="@dimen/relax_volume_icon_merve_v"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <com.wanos.media.widget.WanosTextView
+        android:textSize="@dimen/relax_main_text_size"
+        android:textColor="@color/white"
+        android:gravity="center_horizontal"
+        android:id="@+id/tv_audio_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/relax_volume_text_merge_top"
+        android:maxLines="1"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

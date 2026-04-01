@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_gravity="center_horizontal"
+    android:layout_width="@dimen/p_user_item_avatar_h_w"
+    android:layout_height="@dimen/p_user_item_avatar_h_w">
+    <ImageView
+        android:id="@+id/pro"
+        android:padding="@dimen/p_user_item_padding"
+        android:layout_width="@dimen/p_user_item_ava_img_h_w"
+        android:layout_height="@dimen/p_user_item_ava_img_h_w"
+        android:src="@drawable/p_user_ava_d"
+        android:scaleType="centerCrop"/>
+    <ImageView
+        android:layout_gravity="top|right"
+        android:id="@+id/iv_select"
+        android:scrollX="@dimen/p_user_select_scroll_x"
+        android:scrollY="@dimen/p_user_select_scroll_y"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/p_avatar_select"
+        android:scaleType="centerCrop"/>
+</FrameLayout>

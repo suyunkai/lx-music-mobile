@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="30dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.wanos.MaterialAutoRefreshLayout
+        android:id="@+id/audiobook_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:overlay="false"
+        app:wave_color="@color/ab_wave_color"
+        app:wave_show="true">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/audiobook_mine_follow_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.wanos.MaterialAutoRefreshLayout>
+    <include
+        android:id="@+id/empty_view"
+        android:visibility="gone"
+        layout="@layout/empty_view"/>
+</FrameLayout>

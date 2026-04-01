@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#000000"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/iv_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+    <net.center.blurview.ShapeBlurView
+        android:id="@+id/base_blur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:blur_border_width="0dp"
+        app:blur_corner_radius="13dp"
+        app:blur_down_sample="4"
+        app:blur_mode="rectangle"
+        app:blur_overlay_color="#29000000"
+        app:blur_radius="25dp"/>
+    <View
+        android:background="#66000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <FrameLayout
+        android:id="@+id/base_content_viewgroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</FrameLayout>

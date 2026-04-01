@@ -13,6 +13,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
+import com.guichaguri.trackplayer.service.MusicManager;
 
 /**
  * React Native 原生模块 - 多声道空间音频控制
@@ -155,6 +156,8 @@ public class SpatialAudioModule extends ReactContextBaseJavaModule {
             }
             // 同时控制 AudioProcessor（作为备用）
             getAudioProcessor().setEnabled(enabled && !systemWanosAvailable);
+            // 设置多声道输出路由：将音频路由到支持多声道的总线（如 bus3）
+            MusicManager.setMultichannelOutput(getReactApplicationContext(), enabled);
             Log.d(TAG, "Multichannel " + (enabled ? "enabled" : "disabled") +
                     " (system=" + systemWanosAvailable + ")");
             promise.resolve(null);
@@ -257,6 +260,8 @@ public class SpatialAudioModule extends ReactContextBaseJavaModule {
                 Log.i(TAG, "Initialized with AudioProcessor: layout=" +
                         layout.getDisplayName() + ", upmix=" + upmixEnabled);
             }
+            // 设置多声道输出路由：将音频路由到支持多声道的总线
+            MusicManager.setMultichannelOutput(getReactApplicationContext(), true);
             promise.resolve(null);
         } catch (Exception e) {
             promise.reject("SPATIAL_AUDIO_ERROR", e.getMessage(), e);

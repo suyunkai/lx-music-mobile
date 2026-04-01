@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="2dp"/>
+    <solid android:color="@color/material_search_edit_cursor_color"/>
+    <size
+        android:height="38dp"
+        android:width="3dp"/>
+</shape>

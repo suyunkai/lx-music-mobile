@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/background">
+        <shape>
+            <solid android:color="#000000"/>
+            <corners android:radius="@dimen/mormal_radius"/>
+        </shape>
+    </item>
+    <item android:id="@android:id/progress">
+        <scale android:scaleWidth="100%">
+            <shape>
+                <solid android:color="@color/edit_color_main"/>
+                <corners android:radius="@dimen/mormal_radius"/>
+            </shape>
+        </scale>
+    </item>
+    <item
+        android:id="@+id/start_progress"
+        android:width="0dp">
+        <shape>
+            <solid android:color="#000000"/>
+            <corners
+                android:topLeftRadius="@dimen/mormal_radius"
+                android:bottomLeftRadius="@dimen/mormal_radius"/>
+        </shape>
+    </item>
+    <item
+        android:gravity="right"
+        android:id="@+id/end_progress"
+        android:width="0dp">
+        <shape>
+            <solid android:color="#000000"/>
+            <corners
+                android:topRightRadius="@dimen/mormal_radius"
+                android:bottomRightRadius="@dimen/mormal_radius"/>
+        </shape>
+    </item>
+</layer-list>

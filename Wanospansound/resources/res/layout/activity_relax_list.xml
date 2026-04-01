@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btn_back"
+        android:layout_width="@dimen/w_image_btn_size"
+        android:layout_height="@dimen/w_image_btn_size"
+        android:layout_marginTop="@dimen/relax_title_merge_top"
+        android:src="@drawable/icon_back"
+        android:layout_marginStart="@dimen/w_left"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <com.wanos.media.widget.WanosTextView
+        android:textSize="@dimen/w_font_size_bar"
+        android:textColor="@color/w_font_title_1"
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/relax_title_text_icon_space"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_back"
+        app:layout_constraintLeft_toRightOf="@+id/btn_back"
+        app:layout_constraintTop_toTopOf="@+id/btn_back"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_relax_list"
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:overScrollMode="never"
+        android:layout_marginHorizontal="@dimen/relax_list_content_h"
+        android:layout_marginVertical="@dimen/relax_list_content_v"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_back"/>
+    <include
+        android:id="@+id/loading_view"
+        layout="@layout/fragment_loading"/>
+    <include
+        android:id="@+id/empty_view"
+        layout="@layout/empty_view"/>
+    <include
+        android:id="@+id/error_view"
+        layout="@layout/error"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

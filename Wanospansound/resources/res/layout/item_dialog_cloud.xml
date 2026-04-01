@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/cloud_dialog_item_h"
+    android:layout_marginBottom="@dimen/cloud_dialog_item_space">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_cloud_dir"/>
+    <com.wanos.media.ui.widget.WanosTextView
+        android:textSize="@dimen/cloud_dialog_button_text"
+        android:textColor="@color/cloud_dialog_directory_2_text"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/tv_dir_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:layout_weight="1"
+        android:layout_marginHorizontal="@dimen/cloud_dialog_item_file_name_margin_s"
+        app:wanos_weight="500"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_cloud_next"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

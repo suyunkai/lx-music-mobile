@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/ai_play_audio_btn"
+    android:layout_width="96dp"
+    android:layout_height="96dp"
+    android:layout_marginStart="54dp">
+    <com.wanos.media.ui.widget.WanosTextView
+        android:textSize="54sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:id="@+id/tv_play"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:text="3"
+        app:wanos_weight="700"/>
+    <ProgressBar
+        android:layout_gravity="center"
+        android:id="@+id/progress_play"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:indeterminateTint="@color/white"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_gravity="center"
+        android:id="@+id/iv_play"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/icon_ai_play_player"/>
+</FrameLayout>

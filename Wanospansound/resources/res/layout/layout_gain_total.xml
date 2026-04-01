@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:id="@+id/layout_total_db"
+    android:background="@drawable/bg_total_db"
+    android:layout_width="@dimen/track_width"
+    android:layout_height="@dimen/edit_total_gain_h">
+    <ImageView
+        android:layout_width="@dimen/at_top_height"
+        android:layout_height="@dimen/at_top_height"
+        android:scaleType="center"
+        app:srcCompat="@drawable/editing_sound"/>
+    <SeekBar
+        android:layout_gravity="center"
+        android:id="@+id/seek_bar_gain"
+        android:background="@null"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:max="12"
+        android:progress="0"
+        android:progressDrawable="@drawable/progress_seekbar_total"
+        android:thumb="@drawable/seek_thumb"
+        android:thumbOffset="0dp"
+        android:layout_weight="1"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:min="-60"
+        android:layout_marginHorizontal="14dp"
+        android:paddingHorizontal="0dp"/>
+    <TextView
+        android:textSize="28sp"
+        android:textColor="@color/white"
+        android:gravity="right"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/tv_db"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="14dp"
+        android:text="+23"
+        android:textFontWeight="500"/>
+</LinearLayout>

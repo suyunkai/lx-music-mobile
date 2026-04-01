@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/editing_page_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:gravity="left"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:paddingHorizontal="10dp">
+        <ImageView
+            android:id="@+id/editing_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back"
+            android:cropToPadding="true"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"/>
+    </LinearLayout>
+    <include
+        android:id="@+id/page_player"
+        layout="@layout/fragment_prview_page"/>
+</LinearLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/relax_item_ming_xiang_size"
+    android:layout_height="@dimen/relax_item_ming_xiang_size"
+    android:layout_marginHorizontal="@dimen/relax_item_ming_xiang_merge_h">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_background_img"
+        android:padding="@dimen/relax_item_ming_xiang_padding"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/icon_ming_xiang_def"/>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_width="@dimen/relax_item_ming_xiang_min_size"
+        android:layout_height="@dimen/relax_item_ming_xiang_min_size">
+        <com.wanos.media.ui.widget.WanosTextView
+            android:textSize="@dimen/relax_main_text_size"
+            android:textColor="@color/white"
+            android:ellipsize="end"
+            android:gravity="bottom|center_horizontal"
+            android:id="@+id/tv_time_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/relax_item_ming_xiang_item_height"
+            android:maxLines="1"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/relax_item_ming_xiang_item_height">
+            <com.wanos.media.ui.widget.WanosTextView
+                android:textSize="@dimen/relax_main_text_size"
+                android:textColor="@color/white"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:id="@+id/tv_time_size"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxLines="1"/>
+            <ProgressBar
+                android:layout_gravity="center"
+                android:id="@+id/loading_bar"
+                android:layout_width="@dimen/relax_item_ming_xiang_item_progress"
+                android:layout_height="@dimen/relax_item_ming_xiang_item_progress"
+                android:indeterminateDrawable="@drawable/src_loading"/>
+        </FrameLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</FrameLayout>

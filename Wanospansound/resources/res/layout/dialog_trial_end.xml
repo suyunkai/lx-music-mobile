@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/relax_dialog_background"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <com.wanos.media.widget.CustomDialogTitle
+        android:id="@+id/title"
+        android:layout_width="@dimen/relax_dialog_width_normal"
+        android:layout_height="wrap_content"
+        app:dialog_title="@string/relax_trial_end_dialog_title"/>
+    <com.wanos.media.widget.WanosTextView
+        android:textSize="@dimen/relax_main_text_size"
+        android:textColor="@color/relax_sub_text_color"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/relax_dialog_space"
+        android:minHeight="@dimen/relax_trial_hint_text_min_height"
+        android:text="@string/relax_trial_end_dialog_msg"/>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/relax_dialog_space">
+        <com.wanos.media.widget.WanosTextView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/btn_open_vip"
+            android:minWidth="@dimen/relax_trial_button_width"
+            android:text="@string/relax_trial_end_dialog_btn_open"
+            app:wanos_weight="500"
+            style="@style/RelaxPositiveButton"/>
+        <com.wanos.media.widget.WanosTextView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/btn_exit"
+            android:minWidth="@dimen/relax_trial_button_width"
+            android:text="@string/relax_trial_end_dialog_btn_exit"
+            android:layout_marginStart="@dimen/relax_dialog_button_space"
+            app:wanos_weight="500"
+            style="@style/RelaxNegativeButton"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

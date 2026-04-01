@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt"
+    android:height="168dp"
+    android:width="168dp"
+    android:viewportWidth="154"
+    android:viewportHeight="154">
+    <path
+        android:fillColor="@drawable/_ic_rec2_daily_play_mask2__0_res_0x7f080066"
+        android:pathData="M77,77m77,-0a77,77 0,1 1,-154 -0a77,77 0,1 1,154 -0"
+        android:strokeAlpha="0.2"
+        android:fillAlpha="0.2"/>
+</vector>

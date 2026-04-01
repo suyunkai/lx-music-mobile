@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:versionCode="12"
+    android:versionName="1.0.43"
+    android:compileSdkVersion="34"
+    android:compileSdkVersionCodename="14"
+    package="com.wanos.media"
+    platformBuildVersionCode="34"
+    platformBuildVersionName="14">
+    <uses-sdk
+        android:minSdkVersion="28"
+        android:targetSdkVersion="34"/>
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32"/>
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.car.permission.CAR_VENDOR_EXTENSION"/>
+    <uses-permission android:name="android.car.permission.CAR_IDENTIFICATION"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
+    <uses-permission android:name="music.intent.action.source"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
+    <uses-feature
+        android:glEsVersion="0x30000"
+        android:required="true"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
+    <uses-permission
+        android:name="android.hardware.usb.host"
+        android:required="false"/>
+    <uses-feature
+        android:name="android.hardware.usb.host"
+        android:required="true"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDID_PLAYBACK"/>
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+        </intent>
+    </queries>
+    <permission
+        android:name="com.wanos.media.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:protectionLevel="signature"/>
+    <uses-permission android:name="com.wanos.media.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"/>
+    <application
+        android:theme="@style/Theme.WanosMedia"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:name="com.wanos.media.MainApplication"
+        android:allowBackup="true"
+        android:largeHeap="true"
+        android:supportsRtl="true"
+        android:extractNativeLibs="false"
+        android:fullBackupContent="@xml/backup_rules"
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:requestLegacyExternalStorage="true"
+        android:dataExtractionRules="@xml/data_extraction_rules">
+        <receiver
+            android:label="@string/appwidget_text"
+            android:name="com.wanos.media.WanosAppWidget"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/wanos_app_widget_info_245"/>
+        </receiver>
+        <activity
+            android:name="com.wanos.media.WanosAppWidgetConfigureActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:theme="@style/splashTheme"
+            android:name="com.wanos.media.ui.actvity.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|orientation">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wanos.media.ui.actvity.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"
+            android:resizeableActivity="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="wanos"
+                    android:host="media.geely.com"
+                    android:path="/wanos/home"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wanos.media.ui.music.activity.MusicListActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"
+            android:resizeableActivity="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="wanos"
+                    android:host="media.geely.com"
+                    android:path="/music/group/detail"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wanos.media.ui.music.activity.MusicGroupListActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"
+            android:resizeableActivity="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="wanos"
+                    android:host="media.geely.com"
+                    android:path="/music/group/list"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wanos.media.ui.music.activity.MyMusicActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"
+            android:resizeableActivity="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="wanos"
+                    android:host="media.geely.com"
+                    android:path="/music/my/list"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wanos.media.ui.music.activity.MusicPlayActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"
+            android:resizeableActivity="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="wanos"
+                    android:host="media.geely.com"
+                    android:path="/music/play"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wanos.media.ui.audiobook.activity.AudioBookMineActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"
+            android:resizeableActivity="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="wanos"
+                    android:host="media.geely.com"
+                    android:path="/audiobook/mine"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wanos.media.ui.actvity.RecentPlayActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"
+            android:resizeableActivity="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="wanos"
+                    android:host="media.car.com"
+                    android:path="/juyihall/recentplay"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wanos.media.ui.actvity.CollectionActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"
+            android:resizeableActivity="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="wanos"
+                    android:host="media.car.com"
+                    android:path="/juyihall/collection"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wanos.media.ui.audiobook.activity.AudioBookAlbumListActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"
+            android:resizeableActivity="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="wanos"
+                    android:host="media.geely.com"
+                    android:path="/audiobook/album/list"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wanos.media.ui.audiobook.activity.AudioBookChildrenAlbumListActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"
+            android:resizeableActivity="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="wanos"
+                    android:host="media.geely.com"
+                    android:path="/audiobook/children/album"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wanos.media.ui.audiobook.activity.AudioBookAlbumActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"
+            android:resizeableActivity="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="wanos"
+                    android:host="media.geely.com"
+                    android:path="/audiobook/album"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wanos.media.ui.audiobook.activity.AudioBookPlayerActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"
+            android:resizeableActivity="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="wanos"
+                    android:host="media.geely.com"
+                    android:path="/audiobook/play"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wanos.media.ui.search.SearchActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"
+            android:windowSoftInputMode="adjustNothing"
+            android:resizeableActivity="true"/>
+        <activity
+            android:name="com.wanos.media.ui.login.activity.UserInfoAndOrderActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"
+            android:resizeableActivity="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="wanos"
+                    android:host="media.geely.com"
+                    android:path="/userinfo/center"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wanos.media.ui.login.activity.MemberPayActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"
+            android:resizeableActivity="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="wanos"
+                    android:host="media.geely.com"
+                    android:path="/member/pay"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wanos.media.ui.advertise.WebViewActivity"
+            android:exported="true"
+            android:process=":webview"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"
+            android:resizeableActivity="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="wanos"
+                    android:host="media.geely.com"
+                    android:path="/banner/h5"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wanos.media.ui.video.activity.IQYVideoListActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"
+            android:resizeableActivity="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="wanos"
+                    android:host="media.geely.com"
+                    android:path="/iqy/list"/>
+            </intent-filter>
+        </activity>
+        <receiver
+            android:name="com.wanos.media.ui.BootBroadReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.wanos.media.ui.RadioReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="autoegg.intent.action.CLOSE_APP"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="ecarx.intent.broadcast.action.ECARX_VR_APP_CLOSE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="ecarx"
+                    android:host="vr.com"
+                    android:path="/全景声"/>
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.wanos.media.ui.WidgetClickReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.wanos.media.action.WIDGET_CLICK"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="com.wanos.media.ui.RecoveryMediaService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.wanos.media.recovery"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.wanos.media.ui.advertise.WebViewMessengerService"
+            android:exported="false"
+            android:process=":webview"/>
+        <service
+            android:name="com.wanos.groove.GrooveDataService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.wanos.groove.service"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="SWYS_MULTI_CHOOSE"
+            android:value="enable"/>
+        <profileable
+            android:enabled="true"
+            android:shell="true"/>
+        <service
+            android:name="com.wanos.media.services.MediaPlayerServices"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback"/>
+        <activity
+            android:name="com.wanos.media.ui.theme.MeThemeActivity"
+            android:exported="true"
+            android:configChanges="smallestScreenSize|screenSize|uiMode|screenLayout|orientation"
+            android:resizeableActivity="true"/>
+        <activity
+            android:name="com.wanos.media.view.RelaxListActivity"
+            android:exported="false"
+            android:resizeableActivity="true"/>
+        <activity
+            android:name="com.wanos.media.ui.info.ZeroInfoActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:hardwareAccelerated="true"
+            android:resizeableActivity="false"/>
+        <activity
+            android:name="com.wanos.careditproject.view.AiPlayActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|orientation"/>
+        <activity
+            android:name="com.wanos.careditproject.view.AiEditActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|orientation"/>
+        <activity
+            android:name="com.wanos.editmain.activity.TempleteListActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|orientation"/>
+        <activity
+            android:name="com.wanos.editmain.activity.CreatorMineActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"/>
+        <activity
+            android:name="com.wanos.editmain.activity.CreatorCommunityActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"/>
+        <activity
+            android:name="com.wanos.editmain.activity.LiveHouseListActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|orientation"/>
+        <activity
+            android:name="com.wanos.careditproject.material.SearchActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"/>
+        <activity
+            android:name="com.wanos.careditproject.material.MaterialListActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"/>
+        <activity
+            android:name="com.wanos.careditproject.view.EditingActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity
+            android:name="com.wanos.careditproject.view.WanosPlayerActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"/>
+        <activity
+            android:name="com.wanos.careditproject.view.dialog.CreatorProjectPublishActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="fontScale|screenSize|uiMode|orientation"/>
+        <service android:name="com.wanos.careditproject.service.PublishService"/>
+        <service
+            android:name="androidx.room.MultiInstanceInvalidationService"
+            android:exported="false"
+            android:directBootAware="true"/>
+        <service
+            android:name="com.wanos.wanosplayermodule.MediaPlayerService"
+            android:enabled="true"
+            android:exported="true"
+            android:foregroundServiceType="mediaPlayback"/>
+        <activity
+            android:theme="@style/ActivityTranslucent"
+            android:name="com.blankj.utilcode.util.UtilsTransActivity4MainProcess"
+            android:exported="false"
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity
+            android:theme="@style/ActivityTranslucent"
+            android:name="com.blankj.utilcode.util.UtilsTransActivity"
+            android:exported="false"
+            android:multiprocess="true"
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <provider
+            android:name="com.blankj.utilcode.util.UtilsFileProvider"
+            android:exported="false"
+            android:authorities="com.wanos.media.utilcode.fileprovider"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/util_code_provider_paths"/>
+        </provider>
+        <service
+            android:name="com.blankj.utilcode.util.MessengerUtils.ServerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.wanos.media.messenger"/>
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="eCarX_OpenAPI_AppId"
+            android:value="42a55e103a3e4afdaeeb8e9dcd4993d3"/>
+        <meta-data
+            android:name="eCarX_OpenAPI_AppKey"
+            android:value="fc70010414344b4ebb50053de64ec11e"/>
+        <meta-data
+            android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
+            android:value="GlideModule"/>
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:exported="false"
+            android:authorities="com.wanos.media.androidx-startup">
+            <meta-data
+                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+                android:value="androidx.startup"/>
+            <meta-data
+                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+                android:value="androidx.startup"/>
+            <meta-data
+                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+                android:value="androidx.startup"/>
+        </provider>
+        <provider
+            android:name="me.jessyan.autosize.InitProvider"
+            android:exported="false"
+            android:multiprocess="true"
+            android:authorities="com.wanos.media.autosize-init-provider"/>
+        <service android:name="com.liulishuo.filedownloader.services.FileDownloadService.SharedMainProcessService"/>
+        <service
+            android:name="com.liulishuo.filedownloader.services.FileDownloadService.SeparateProcessService"
+            android:process=":filedownloader"/>
+        <provider
+            android:name="com.just.agentweb.AgentWebFileProvider"
+            android:exported="false"
+            android:authorities="com.wanos.media.AgentWebFileProvider"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/web_files_public"/>
+        </provider>
+        <activity
+            android:theme="@style/actionActivity"
+            android:name="com.just.agentweb.AgentActionFragment"
+            android:exported="false"
+            android:launchMode="standard"
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <receiver
+            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+            android:permission="android.permission.DUMP"
+            android:enabled="true"
+            android:exported="true"
+            android:directBootAware="false">
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SKIP_FILE"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION"/>
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:background="@drawable/home_tab_item_bg_selector"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/home_tab_width">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_table_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/home_tab_zero_selector"
+        android:layout_marginStart="@dimen/tab_icon_left"/>
+    <com.wanos.media.ui.widget.WanosTextView
+        android:textSize="@dimen/tab_text_size"
+        android:textColor="@color/tab_text_color_selector"
+        android:ellipsize="end"
+        android:id="@+id/tv_table_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/zero"
+        android:maxLines="1"
+        android:layout_marginStart="@dimen/tab_icon_right"
+        app:wanos_weight="500"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

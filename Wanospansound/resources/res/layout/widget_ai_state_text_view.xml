@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:background="@drawable/ai_status_view_background"
+    android:layout_width="wrap_content"
+    android:layout_height="64dp"
+    android:paddingStart="24dp"
+    android:paddingEnd="8dp">
+    <com.wanos.media.ui.widget.WanosTextView
+        android:textSize="32sp"
+        android:textColor="@color/white"
+        android:gravity="center_vertical"
+        android:id="@+id/tv_ai_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_gravity="center_vertical"
+        android:id="@+id/lottie_state"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/ai_anim_progress"
+        app:lottie_repeatMode="restart"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

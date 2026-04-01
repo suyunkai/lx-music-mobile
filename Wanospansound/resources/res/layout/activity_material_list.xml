@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/material_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/material_title_layout_h">
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/turn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_ep_back"
+            android:layout_marginStart="@dimen/material_ic_back_margin_l"/>
+        <com.wanos.media.ui.widget.WanosTextView
+            android:textSize="@dimen/material_title_text_size"
+            android:textColor="@color/material_title_color"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/material_title_margin_s"
+            android:textFontWeight="500"/>
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/search_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/search_logo"
+            android:layout_marginEnd="@dimen/material_ic_search_margin_r"/>
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:layout_gravity="center"
+            android:id="@+id/material_magicindicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/material_list_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/material_viewpage_margin_t"
+        android:layout_weight="1"/>
+</LinearLayout>

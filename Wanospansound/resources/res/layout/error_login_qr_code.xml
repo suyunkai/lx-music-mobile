@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:layout_width="@dimen/p_wechat_cover_wh"
+    android:layout_height="@dimen/p_wechat_cover_wh">
+    <androidx.cardview.widget.CardView
+        android:background="@color/p_login_qrcode_error_bg_color"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardBackgroundColor="@color/p_login_qrcode_error_bg_color"
+        app:cardCornerRadius="@dimen/login_dialog_qrcode_error_radius"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="@dimen/p_login_refresh_wh"
+                android:layout_height="@dimen/p_login_refresh_wh"
+                android:layout_marginTop="@dimen/p_login_refresh_m_top"
+                android:src="@drawable/p_login_error"/>
+            <TextView
+                android:textSize="@dimen/p_loading_refresh"
+                android:textColor="@color/p_login_loading"
+                android:id="@+id/tv_error_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/p_login_refresh_s_m_top"
+                android:text="@string/p_login_loading"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

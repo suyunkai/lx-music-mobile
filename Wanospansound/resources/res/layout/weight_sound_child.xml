@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_gravity="center"
+        android:id="@+id/iv_animation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/icon_zero_animatioin"/>
+    <View
+        android:layout_gravity="center"
+        android:id="@+id/v_icon"
+        android:layout_width="@dimen/zero_sound_icon_max"
+        android:layout_height="@dimen/zero_sound_icon_max"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_gravity="center"
+        android:id="@+id/iv_icon"
+        android:layout_width="@dimen/zero_sound_icon_image_max"
+        android:layout_height="@dimen/zero_sound_icon_image_max"/>
+    <com.wanos.media.widget.sound.SoundSeekBar
+        android:layout_gravity="center_vertical"
+        android:id="@+id/seekbar_sound"
+        android:visibility="invisible"
+        android:layout_width="@dimen/zero_sound_seek_width"
+        android:layout_height="@dimen/zero_sound_seek_height"
+        android:layout_marginStart="@dimen/zero_sound_seekbar_merge_start"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_gravity="end"
+        android:id="@+id/iv_delete"
+        android:visibility="invisible"
+        android:layout_width="@dimen/zero_sound_delete_size"
+        android:layout_height="@dimen/zero_sound_delete_size"
+        android:layout_marginTop="@dimen/zero_sound_delete_merge_end"
+        android:src="@drawable/icon_zero_sound_del"
+        android:layout_marginEnd="@dimen/zero_sound_delete_merge_end"/>
+</merge>

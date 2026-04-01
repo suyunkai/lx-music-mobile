@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.wanos.media.ui.widget.MusicSourceView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center_horizontal"
+    android:id="@+id/iv_top_logo"
+    android:layout_width="@dimen/main_left_width"
+    android:layout_height="wrap_content"
+    app:appBrandImage="@drawable/home_text"
+    app:appIcon="@drawable/home_icon"
+    app:appName="WANOS"/>

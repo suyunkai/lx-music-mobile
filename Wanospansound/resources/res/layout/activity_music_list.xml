@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/title_bar_back_top_padding"
+        android:src="@drawable/icon_back"
+        android:paddingStart="@dimen/title_bar_padding"
+        android:paddingEnd="@dimen/title_bar_left_btn_right_padding"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <include
+        android:id="@+id/left_content"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/title_bar_height"
+        app:layout_constraintHorizontal_weight="960"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/list_content"
+        layout="@layout/layout_music_group_details"/>
+    <include
+        android:id="@+id/list_content"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/left_list_top"
+        android:layout_marginEnd="@dimen/search_result_list_margin_end"
+        app:layout_constraintHorizontal_weight="1600"
+        app:layout_constraintLeft_toRightOf="@+id/left_content"
+        app:layout_constraintRight_toRightOf="parent"
+        layout="@layout/layout_music_list"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:width="@dimen/rec_audiobook_item_pages_bg_w">
+        <shape android:shape="rectangle">
+            <solid android:color="#4d4040"/>
+            <corners
+                android:topRightRadius="@dimen/rec_music_item_top_radius"
+                android:bottomRightRadius="@dimen/rec_music_item_top_radius"/>
+        </shape>
+    </item>
+    <item
+        android:width="@dimen/rec_audiobook_item_pages_w"
+        android:top="1dp"
+        android:bottom="1dp"
+        android:end="@dimen/rec_audiobook_item_pages_w">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/text_color"/>
+            <corners
+                android:topRightRadius="@dimen/rec_music_item_top_radius"
+                android:bottomRightRadius="@dimen/rec_music_item_top_radius"/>
+        </shape>
+    </item>
+</layer-list>

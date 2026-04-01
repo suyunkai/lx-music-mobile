@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:height="108dp"
+    android:width="80dp"
+    android:viewportWidth="80"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M27,26.67V21.28C27,19.47 28.47,18 30.28,18H58.72C60.53,18 62,19.47 62,21.28V49.72C62,51.53 60.53,53 58.72,53H53.27"
+        android:strokeColor="#ffffff"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="bevel"/>
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M49.72,27H21.28C19.47,27 18,28.47 18,30.28V58.72C18,60.53 19.47,62 21.28,62H49.72C51.53,62 53,60.53 53,58.72V30.28C53,28.47 51.53,27 49.72,27Z"
+        android:strokeColor="#ffffff"
+        android:strokeWidth="4"
+        android:strokeLineCap="square"/>
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M26.5,36C31.67,36 42,36 42,36"
+        android:strokeColor="#ffffff"
+        android:strokeWidth="4"
+        android:strokeLineCap="square"/>
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M26.5,44C31.67,44 42,44 42,44"
+        android:strokeColor="#ffffff"
+        android:strokeWidth="4"
+        android:strokeLineCap="square"/>
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M27,52C29.33,52 34,52 34,52"
+        android:strokeColor="#ffffff"
+        android:strokeWidth="4"
+        android:strokeLineCap="square"/>
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M17.18,86.83L18.88,86.38C19.58,88.03 20.13,90.14 20.3,91.56L18.47,92.04C18.38,90.65 17.82,88.49 17.18,86.83ZM25.22,86.18L27.33,86.66C26.66,88.51 25.86,90.72 25.19,92.09L23.63,91.63C24.23,90.17 24.9,87.82 25.22,86.18ZM26.97,96.14H30.88V84.74H33.18V89.42H39.11V91.58H33.18V96.14H38.42V106.92H36.14V105.91H29.18V107.02H26.97V96.14ZM29.18,103.75H36.14V98.3H29.18V103.75ZM17.01,92.95H21.06V84.74H23.22V92.95H26.92V95.09H23.22V96.1C24.02,96.82 26.32,99.19 26.82,99.82L25.53,101.64C25.1,100.87 24.09,99.5 23.22,98.38V106.99H21.06V98.45C20.1,100.68 18.9,102.82 17.7,104.18C17.49,103.51 16.94,102.53 16.58,101.95C18.09,100.34 19.67,97.56 20.61,95.09H17.01V92.95ZM45.16,89.47H47.1V96.12C47.1,99.74 46.5,104.28 42.14,107.06C41.87,106.63 41.22,105.94 40.77,105.58C44.85,103.27 45.16,99.12 45.16,96.12V89.47ZM46.41,102.05L47.99,101.09C48.9,102.38 50.1,104.16 50.66,105.24L48.95,106.37C48.45,105.24 47.32,103.42 46.41,102.05ZM41.87,85.99H50.51V100.66H48.57V88.03H43.7V100.73H41.87V85.99ZM51.57,96.14H55.31V84.74H57.45V89.38H63.16V91.49H57.45V96.14H62.39V106.92H60.33V105.86H53.58V107.02H51.57V96.14ZM53.58,103.75H60.33V98.26H53.58V103.75Z"/>
+</vector>

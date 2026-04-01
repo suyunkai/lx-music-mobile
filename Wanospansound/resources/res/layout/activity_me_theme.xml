@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:orientation="vertical"
+        android:layout_width="536dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp">
+        <com.wanos.media.widget.WanosTextView
+            android:textSize="42sp"
+            android:textColor="@color/tab_text_color_selector"
+            android:gravity="center"
+            android:id="@+id/btn_xiao_qi"
+            android:background="@drawable/home_tab_item_bg_selector"
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:text="@string/zero_table_xiao_qi"
+            android:paddingEnd="36dp"
+            app:wanos_weight="500"/>
+        <com.wanos.media.widget.WanosTextView
+            android:textSize="42sp"
+            android:textColor="@color/tab_text_color_selector"
+            android:gravity="center"
+            android:id="@+id/btn_ming_xiang"
+            android:background="@drawable/home_tab_item_bg_selector"
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/zero_table_ming_xiang"
+            android:paddingEnd="36dp"
+            app:wanos_weight="500"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fl_me_theme"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="56dp"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

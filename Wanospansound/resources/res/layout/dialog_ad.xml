@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_dialog_layout"
+    android:background="@color/search_clear_dialog_window_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/iv_confirm"
+        android:layout_width="@dimen/advertise_dialog_confirm_w"
+        android:layout_height="@dimen/advertise_dialog_confirm_h"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <ImageView
+        android:id="@+id/iv_cancel"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/advertise_dialog_cancel_margin_l_t"
+        android:src="@drawable/activity_dialog_back"
+        android:layout_marginStart="@dimen/advertise_dialog_cancel_margin_l_t"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_confirm"
+        app:layout_constraintTop_toTopOf="@+id/iv_confirm"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

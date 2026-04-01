@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:layout_gravity="center"
+        android:id="@+id/common_material_mi"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/material_title_h"
+        android:layout_marginTop="@dimen/material_second_tab_margin_t"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/common_material_vp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/material_second_tab_margin_t"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/common_material_mi"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

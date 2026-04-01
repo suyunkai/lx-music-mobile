@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <corners
+        android:topLeftRadius="@dimen/include_pay_card_radius_all"
+        android:topRightRadius="@dimen/include_pay_card_radius_all"
+        android:bottomLeftRadius="@dimen/include_pay_card_radius_all"
+        android:bottomRightRadius="@dimen/include_pay_card_radius_b_r"/>
+    <stroke
+        android:width="@dimen/member_pay_card_border_select"
+        android:color="@color/pay_select_select_border_color"/>
+    <solid android:color="@color/pay_select_select_bg_color"/>
+</shape>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:scrollbars="none"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:textSize="@dimen/card_title_textsize"
+            android:textColor="@color/card_title_text_color"
+            android:id="@+id/tv_movies"
+            android:paddingBottom="@dimen/music_group_list_margin_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wanos_movies"
+            android:drawablePadding="@dimen/drawable_padding"
+            app:drawableRightCompat="@drawable/ic_right_arrow"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_movies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_movies"/>
+        <TextView
+            android:textSize="@dimen/card_title_textsize"
+            android:textColor="@color/card_title_text_color"
+            android:id="@+id/tv_tv"
+            android:paddingBottom="@dimen/music_group_list_margin_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wanos_tv"
+            android:drawablePadding="@dimen/drawable_padding"
+            app:drawableRightCompat="@drawable/ic_right_arrow"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/list_movies"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_tv"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

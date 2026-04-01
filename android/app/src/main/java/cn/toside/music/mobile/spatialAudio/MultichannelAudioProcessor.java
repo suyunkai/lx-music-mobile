@@ -157,6 +157,17 @@ public class MultichannelAudioProcessor implements AudioProcessor {
         // 只支持 PCM_16BIT 和 PCM_FLOAT
         boolean supportedEncoding = (encoding == C.ENCODING_PCM_16BIT || encoding == C.ENCODING_PCM_FLOAT);
 
+        // 多声道直通保护 —— 优先检查，即使 enabled=false（系统 Wanos 模式）也要保护多声道输入
+        // 防止多声道 PCM 被 ExoPlayer 内部降混为立体声
+        if (supportedEncoding && inputChannels > 2 && multichannelPassthroughEnabled) {
+            processMode = ProcessMode.MULTICHANNEL_PASSTHROUGH;
+            pendingOutputFormat = inputAudioFormat;
+            Log.d(TAG, "configure: " + inputChannels + "ch " +
+                    inputAudioFormat.sampleRate + "Hz -> multichannel passthrough" +
+                    (enabled ? "" : " (processor disabled, passthrough protection only)"));
+            return pendingOutputFormat;
+        }
+
         if (!supportedEncoding || !enabled || !libraryAvailable) {
             processMode = ProcessMode.PASSTHROUGH;
             pendingOutputFormat = inputAudioFormat;
@@ -178,15 +189,6 @@ public class MultichannelAudioProcessor implements AudioProcessor {
             Log.d(TAG, "configure: stereo " + inputAudioFormat.sampleRate + "Hz " +
                     (inputIsFloat ? "FLOAT" : "PCM16") +
                     " -> Wanos upmix to " + targetLayout.getDisplayName());
-            return pendingOutputFormat;
-        }
-
-        // 多声道输入（≥3ch）：直通保护，防止 ExoPlayer 降混
-        if (inputChannels > 2 && multichannelPassthroughEnabled) {
-            processMode = ProcessMode.MULTICHANNEL_PASSTHROUGH;
-            pendingOutputFormat = inputAudioFormat;
-            Log.d(TAG, "configure: " + inputChannels + "ch " +
-                    inputAudioFormat.sampleRate + "Hz -> multichannel passthrough");
             return pendingOutputFormat;
         }
 

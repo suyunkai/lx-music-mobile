@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false">
+    <include
+        android:id="@+id/left_content"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1456"
+        layout="@layout/layout_music_play_details"/>
+    <include
+        android:id="@+id/right_content"
+        android:paddingTop="@dimen/music_play_right_padding_t"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1104"
+        layout="@layout/layout_music_play_right_content"/>
+</LinearLayout>

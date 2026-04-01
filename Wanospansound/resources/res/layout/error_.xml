@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:id="@+id/root_error"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/iv_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_error"/>
+    <TextView
+        android:textSize="@dimen/loading_msg_size"
+        android:textColor="@color/text_color"
+        android:id="@+id/tv_errorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wanos_error_message"/>
+    <TextView
+        android:textSize="@dimen/msg_text_size"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:id="@+id/btn_retry"
+        android:background="@drawable/btn_retry"
+        android:layout_width="@dimen/retry_width"
+        android:layout_height="@dimen/retry_height"
+        android:layout_marginTop="64dp"
+        android:text="@string/wanos_error_retry"/>
+</LinearLayout>

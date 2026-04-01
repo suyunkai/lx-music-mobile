@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/relax_dialog_background"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <com.wanos.media.widget.CustomDialogTitle
+        android:id="@+id/title"
+        android:layout_width="@dimen/relax_dialog_width_normal"
+        android:layout_height="wrap_content"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_gravity="center_horizontal"
+        android:layout_width="@dimen/relax_alarm_icon_width"
+        android:layout_height="@dimen/relax_alarm_icon_height"
+        android:layout_marginTop="@dimen/relax_dialog_space"
+        android:src="@drawable/relax_icon_alarm"/>
+    <com.wanos.media.widget.WanosTextView
+        android:textSize="@dimen/relax_main_text_size"
+        android:textColor="@color/relax_main_text_color"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/relax_alarm_hint_text_top"
+        android:text="@string/zero_alarm_hint"
+        app:wanos_weight="500"/>
+    <com.wanos.media.widget.WanosTextView
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/btn_stop_alarm"
+        android:layout_marginTop="@dimen/relax_dialog_button_top"
+        android:layout_marginBottom="@dimen/relax_dialog_space"
+        android:minWidth="@dimen/relax_alarm_code_button_width"
+        android:text="@string/btn_confirm"
+        app:wanos_weight="500"
+        style="@style/RelaxPositiveButton"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

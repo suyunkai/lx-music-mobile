@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:background="@drawable/bg_zero_impl_item"
+    android:layout_width="match_parent"
+    android:layout_height="132dp"
+    android:paddingHorizontal="@dimen/zero_impl_item_padding">
+    <com.wanos.media.widget.WanosTextView
+        android:textSize="@dimen/zero_impl_item_num_text_size"
+        android:textColor="@color/zero_impl_item_num_text"
+        android:id="@+id/tv_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:wanos_weight="400"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_box"
+        android:layout_width="@dimen/zero_impl_item_box"
+        android:layout_height="@dimen/zero_impl_item_box"
+        android:src="@drawable/src_impl_box"
+        android:layout_marginStart="@dimen/zero_impl_item_space"/>
+    <com.wanos.media.widget.WanosTextView
+        android:textSize="@dimen/zero_impl_item_title_text_size"
+        android:textColor="@color/zero_impl_item_title_text"
+        android:ellipsize="end"
+        android:id="@+id/tv_title"
+        android:layout_width="@dimen/zero_zero"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:layout_weight="1"
+        android:layout_marginHorizontal="@dimen/zero_impl_item_space"
+        app:wanos_weight="500"/>
+    <com.wanos.media.widget.WanosTextView
+        android:textSize="@dimen/zero_impl_item_time_text_size"
+        android:textColor="@color/zero_impl_item_time_text"
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:wanos_weight="400"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

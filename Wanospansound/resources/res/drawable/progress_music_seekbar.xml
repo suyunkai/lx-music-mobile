@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/background">
+        <shape>
+            <solid android:color="@color/music_seek_bg_color"/>
+            <corners android:radius="@dimen/music_progross_radius"/>
+        </shape>
+    </item>
+    <item android:id="@android:id/secondaryProgress">
+        <scale android:scaleWidth="100%">
+            <shape>
+                <solid android:color="@color/music_second_progress"/>
+                <corners android:radius="@dimen/music_progross_radius"/>
+            </shape>
+        </scale>
+    </item>
+    <item android:id="@android:id/progress">
+        <scale android:scaleWidth="100%">
+            <shape>
+                <gradient
+                    android:startColor="@color/music_seek_progress_start_color"
+                    android:endColor="@color/music_seek_progress_end_color"
+                    android:angle="0"/>
+                <corners android:radius="@dimen/music_progross_radius"/>
+            </shape>
+        </scale>
+    </item>
+    <item
+        android:id="@+id/start_progress"
+        android:width="0dp">
+        <shape>
+            <solid android:color="@color/music_seek_bg_color"/>
+            <corners
+                android:topLeftRadius="@dimen/music_progross_radius"
+                android:bottomLeftRadius="@dimen/music_progross_radius"/>
+        </shape>
+    </item>
+    <item
+        android:gravity="right"
+        android:id="@+id/end_progress"
+        android:width="0dp">
+        <shape>
+            <solid android:color="@color/music_seek_bg_color"/>
+            <corners
+                android:topRightRadius="@dimen/music_progross_radius"
+                android:bottomRightRadius="@dimen/music_progross_radius"/>
+        </shape>
+    </item>
+    <item
+        android:gravity="center_vertical"
+        android:id="@+id/vip_node_start"
+        android:height="@dimen/seek_bar_node_height"
+        android:width="0dp">
+        <shape>
+            <solid android:color="@color/white"/>
+            <corners android:radius="@dimen/seekbar_node_radius"/>
+        </shape>
+    </item>
+    <item
+        android:gravity="center_vertical"
+        android:id="@+id/vip_node_end"
+        android:height="@dimen/seek_bar_node_height"
+        android:width="0dp">
+        <shape>
+            <solid android:color="@color/white"/>
+            <corners android:radius="@dimen/seekbar_node_radius"/>
+        </shape>
+    </item>
+</layer-list>

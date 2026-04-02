@@ -18,7 +18,8 @@
       "Bash(curl -fsSL https://jimeng.jianying.com/cli)",
       "Bash(bash)",
       "Bash(mkdir -p /c/Users/ZD/.dreamina_cli/plugin/skills/dreamina-cli)",
-      "Bash(mkdir -p /c/Users/ZD/.dreamina_cli/plugin/.claude-plugin)"
+      "Bash(mkdir -p /c/Users/ZD/.dreamina_cli/plugin/.claude-plugin)",
+      "Bash(./gradlew.bat assembleRelease)"
     ]
   }
 }

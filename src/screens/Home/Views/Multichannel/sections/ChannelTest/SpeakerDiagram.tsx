@@ -22,6 +22,8 @@ const CHANNEL_POSITIONS: Record<string, { x: number; y: number; isHeight?: boole
   BR:  { x: 88, y: 88 },
   TFL: { x: 28, y: 18, isHeight: true },
   TFR: { x: 72, y: 18, isHeight: true },
+  TSL: { x: 14, y: 50, isHeight: true },
+  TSR: { x: 86, y: 50, isHeight: true },
   TBL: { x: 28, y: 78, isHeight: true },
   TBR: { x: 72, y: 78, isHeight: true },
   FWL: { x: 2,  y: 18 },

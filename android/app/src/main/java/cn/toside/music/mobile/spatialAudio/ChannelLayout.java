@@ -9,19 +9,27 @@ import java.util.List;
  * 多声道布局配置
  * 与 Wanos AudioLayout 对齐，wanosName 用于传给 initWanosRender()
  *
- * Android channel mask 常量参考：
- *   CHANNEL_OUT_FRONT_LEFT          = 0x4
- *   CHANNEL_OUT_FRONT_RIGHT         = 0x8
- *   CHANNEL_OUT_FRONT_CENTER        = 0x10
- *   CHANNEL_OUT_LOW_FREQUENCY       = 0x20
- *   CHANNEL_OUT_BACK_LEFT           = 0x40
- *   CHANNEL_OUT_BACK_RIGHT          = 0x80
- *   CHANNEL_OUT_SIDE_LEFT           = 0x200
- *   CHANNEL_OUT_SIDE_RIGHT          = 0x400
- *   CHANNEL_OUT_TOP_FRONT_LEFT      = 0x1000  (API 32+)
- *   CHANNEL_OUT_TOP_FRONT_RIGHT     = 0x2000  (API 32+)
- *   CHANNEL_OUT_TOP_BACK_LEFT       = 0x8000  (API 32+)
- *   CHANNEL_OUT_TOP_BACK_RIGHT      = 0x10000 (API 32+)
+ * Android channel mask 常量参考（Java AudioFormat）：
+ *   CHANNEL_OUT_FRONT_LEFT            = 0x4
+ *   CHANNEL_OUT_FRONT_RIGHT           = 0x8
+ *   CHANNEL_OUT_FRONT_CENTER          = 0x10
+ *   CHANNEL_OUT_LOW_FREQUENCY         = 0x20
+ *   CHANNEL_OUT_BACK_LEFT             = 0x40
+ *   CHANNEL_OUT_BACK_RIGHT            = 0x80
+ *   CHANNEL_OUT_FRONT_LEFT_OF_CENTER  = 0x100
+ *   CHANNEL_OUT_FRONT_RIGHT_OF_CENTER = 0x200
+ *   CHANNEL_OUT_BACK_CENTER           = 0x400
+ *   CHANNEL_OUT_SIDE_LEFT             = 0x800
+ *   CHANNEL_OUT_SIDE_RIGHT            = 0x1000
+ *   CHANNEL_OUT_TOP_CENTER            = 0x2000
+ *   CHANNEL_OUT_TOP_FRONT_LEFT        = 0x4000   (API 32+)
+ *   CHANNEL_OUT_TOP_FRONT_CENTER      = 0x8000   (API 32+)
+ *   CHANNEL_OUT_TOP_FRONT_RIGHT       = 0x10000  (API 32+)
+ *   CHANNEL_OUT_TOP_BACK_LEFT         = 0x20000  (API 32+)
+ *   CHANNEL_OUT_TOP_BACK_CENTER       = 0x40000  (API 32+)
+ *   CHANNEL_OUT_TOP_BACK_RIGHT        = 0x80000  (API 32+)
+ *   CHANNEL_OUT_TOP_SIDE_LEFT         = 0x100000 (API 32+)
+ *   CHANNEL_OUT_TOP_SIDE_RIGHT        = 0x200000 (API 32+)
  */
 public enum ChannelLayout {
 
@@ -46,7 +54,7 @@ public enum ChannelLayout {
         "5.1", "510",
         new String[]{"FL", "FR", "FC", "LFE", "BL", "BR"}),
 
-    // 5.1.2 = 5.1 + 2个天空声道 (Top Front Left/Right)
+    // 5.1.2 = 5.1 + 2个天空声道 (Top Side Left/Right)
     SURROUND_5_1_2(8,
         AudioFormat.CHANNEL_OUT_FRONT_LEFT |
         AudioFormat.CHANNEL_OUT_FRONT_RIGHT |
@@ -54,9 +62,9 @@ public enum ChannelLayout {
         AudioFormat.CHANNEL_OUT_LOW_FREQUENCY |
         AudioFormat.CHANNEL_OUT_BACK_LEFT |
         AudioFormat.CHANNEL_OUT_BACK_RIGHT |
-        0x1000 | 0x2000, // TOP_FRONT_LEFT | TOP_FRONT_RIGHT
+        0x100000 | 0x200000, // TOP_SIDE_LEFT | TOP_SIDE_RIGHT
         "5.1.2", "512",
-        new String[]{"FL", "FR", "FC", "LFE", "BL", "BR", "TFL", "TFR"}),
+        new String[]{"FL", "FR", "FC", "LFE", "BL", "BR", "TSL", "TSR"}),
 
     // 5.1.4 = 5.1 + 4个天空声道
     SURROUND_5_1_4(10,
@@ -66,7 +74,7 @@ public enum ChannelLayout {
         AudioFormat.CHANNEL_OUT_LOW_FREQUENCY |
         AudioFormat.CHANNEL_OUT_BACK_LEFT |
         AudioFormat.CHANNEL_OUT_BACK_RIGHT |
-        0x1000 | 0x2000 | 0x8000 | 0x10000, // TFL | TFR | TBL | TBR
+        0x4000 | 0x10000 | 0x20000 | 0x80000, // TFL | TFR | TBL | TBR
         "5.1.4", "514",
         new String[]{"FL", "FR", "FC", "LFE", "BL", "BR", "TFL", "TFR", "TBL", "TBR"}),
 
@@ -95,7 +103,7 @@ public enum ChannelLayout {
         "7.1", "710",
         new String[]{"FL", "FR", "FC", "LFE", "BL", "BR", "SL", "SR"}),
 
-    // 7.1.2 = 7.1 + 2个天空声道
+    // 7.1.2 = 7.1 + 2个天空声道 (对应 AUDIO_CHANNEL_OUT_7POINT1POINT2)
     SURROUND_7_1_2(10,
         AudioFormat.CHANNEL_OUT_FRONT_LEFT |
         AudioFormat.CHANNEL_OUT_FRONT_RIGHT |
@@ -105,9 +113,9 @@ public enum ChannelLayout {
         AudioFormat.CHANNEL_OUT_BACK_RIGHT |
         AudioFormat.CHANNEL_OUT_SIDE_LEFT |
         AudioFormat.CHANNEL_OUT_SIDE_RIGHT |
-        0x1000 | 0x2000, // TFL | TFR
+        0x100000 | 0x200000, // TOP_SIDE_LEFT | TOP_SIDE_RIGHT
         "7.1.2", "712",
-        new String[]{"FL", "FR", "FC", "LFE", "BL", "BR", "SL", "SR", "TFL", "TFR"}),
+        new String[]{"FL", "FR", "FC", "LFE", "BL", "BR", "SL", "SR", "TSL", "TSR"}),
 
     // 7.1.4 = 7.1 + 4个天空声道（Dolby Atmos 级）
     SURROUND_7_1_4(12,
@@ -119,7 +127,7 @@ public enum ChannelLayout {
         AudioFormat.CHANNEL_OUT_BACK_RIGHT |
         AudioFormat.CHANNEL_OUT_SIDE_LEFT |
         AudioFormat.CHANNEL_OUT_SIDE_RIGHT |
-        0x1000 | 0x2000 | 0x8000 | 0x10000, // TFL | TFR | TBL | TBR
+        0x4000 | 0x10000 | 0x20000 | 0x80000, // TFL | TFR | TBL | TBR
         "7.1.4", "714",
         new String[]{"FL", "FR", "FC", "LFE", "BL", "BR", "SL", "SR", "TFL", "TFR", "TBL", "TBR"}),
 
@@ -133,7 +141,7 @@ public enum ChannelLayout {
         AudioFormat.CHANNEL_OUT_BACK_RIGHT |
         AudioFormat.CHANNEL_OUT_SIDE_LEFT |
         AudioFormat.CHANNEL_OUT_SIDE_RIGHT |
-        0x1000 | 0x2000 | 0x8000 | 0x10000 |
+        0x4000 | 0x10000 | 0x20000 | 0x80000 |  // TFL | TFR | TBL | TBR
         0x4000000 | 0x8000000, // FRONT_WIDE_LEFT | FRONT_WIDE_RIGHT
         "9.1.4", "914",
         new String[]{"FL", "FR", "FC", "LFE", "BL", "BR", "SL", "SR", "TFL", "TFR", "TBL", "TBR", "FWL", "FWR"});
